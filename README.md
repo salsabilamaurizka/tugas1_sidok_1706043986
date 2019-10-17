@@ -1,5 +1,9 @@
-#Tugas APAP SIDOK (Sistem Informasi Dokter)
+# Tugas 1 - APAP
 
-## Authors : Salsabila Maurizka
+# SIDOK- Sistem Informasi Dokter
 
-* **Salsabila Maurizka** - *1706043986* - *APAP B*
+https://github.com/salsabilamaurizka/tugas1_sidok_1706043986
+
+## Contributor
+Salsabila Maurizka - 1706043986
+
