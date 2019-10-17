@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Tambah Dokter</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <h3> Tambah Poli </h3>
+    <div class="container-fluid">
+        <div class="w-50">
+            <form th:action="@{/poli/tambah}" th:object="${poli}" method="POST">
+                <div class="row pt-1">
+                    <label class="col-sm-4"> Nama </label>
+                    <input class="col-sm-7 form-control input-sm" type="text" name="nama"/>
+                </div>
+                <div class="row pt-1">
+                    <label class="col-sm-4"> Lokasi </label>
+                    <input class="col-sm-7 form-control input-sm" type="text" name="lokasi"/>
+                </div>
+                <div class="row pt-1">
+                    <button class="btn btn-primary" type="submit"> Submit </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Sistem Informasi Dokter</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <br>
+    <h2 class="text-center"> Sistem Informasi Dokter</h2>
+    <br>
+    <div style="border:1px solid lightgrey">
+        <p class="p-3 bg-dark text-white"> Daftar Dokter</p>
+        <div class="px-3">
+            <table class="table" style="margin: 15px">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">NIP</th>
+                        <th scope="col">NIK</th>
+                        <th scope="col">Jenis Kelamin</th>
+                        <th scope="col">Spesialisasi</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="dokter, iterationStatus : ${listDokter}">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td>
+                            <a th:href="@{/dokter?nikDokter=} + ${dokter.nik}" th:text="${dokter.nama}"></a>
+                        </td>
+                        <td th:text="${dokter.nip}"></td>
+                        <td th:text="${dokter.nik}"></td>
+                        <td th:if="${dokter.jenisKelamin}==1">Laki-Laki</td>
+                        <td th:if="${dokter.jenisKelamin}==2">Perempuan</td>
+                        <td></td>
+                        <td>
+                            <form th:action="@{/dokter/tambahjadwal/}+${dokter.idDokter}">
+                                <button class="btn btn-sm btn-primary">
+                                    Tambah Jadwal
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/dokter/update/}+${dokter.idDokter}">
+                                <button class="btn btn-sm bg-dark text-white">
+                                    Ubah
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/dokter/delete/}+${dokter.idDokter}">
+                                <button class="btn btn-sm btn-danger">
+                                    Hapus
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-right m-3">
+            <a class="btn btn-sm bg-dark text-white" th:href="@{/dokter/tambah}" style="color: white"> Tambah Dokter </a>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

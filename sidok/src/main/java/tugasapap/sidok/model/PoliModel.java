@@ -7,38 +7,42 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 
 @Entity
 @Table(name = "poli")
 
-public class PoliModel {
+public class PoliModel implements Serializable {
     //id, nama, lokasi
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long idPoli;
 
     @NotNull
     @Size(max = 255)
-    @Column(name="nama_poli", nullable = false)
+    @Column(name="nama", nullable = false)
     private String nama;
 
     @NotNull
     @Size(max = 255)
-    @Column(name="lokasi_poli", nullable = false)
+    @Column(name="lokasi", nullable = false)
     private String lokasi;
 
-    @OneToMany(mappedBy = "poli", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<JadwalJagaModel> listJadwalJaga;
+    @ManyToMany
+    @JoinTable(
+            name = "dokter",
+            joinColumns = @JoinColumn(name = "idPoli"),
+            inverseJoinColumns = @JoinColumn(name = "idDokter"))
+    List<DokterModel> listDokter;
 
-    public BigInteger getId() {
-        return id;
+    public Long getIdPoli() {
+        return idPoli;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setId(Long idPoli) {
+        this.idPoli = idPoli;
     }
 
     public String getNama() {
@@ -55,13 +59,5 @@ public class PoliModel {
 
     public void setLokasi(String lokasi) {
         this.lokasi = lokasi;
-    }
-
-    public List<JadwalJagaModel> getListJadwalJaga() {
-        return listJadwalJaga;
-    }
-
-    public void setListJadwalJaga(List<JadwalJagaModel> listJadwalJaga) {
-        this.listJadwalJaga = listJadwalJaga;
     }
 }

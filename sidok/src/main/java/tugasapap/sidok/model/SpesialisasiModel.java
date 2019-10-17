@@ -8,38 +8,38 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 
 @Entity
 @Table(name = "spesialisasi")
 
-public class SpesialisasiModel {
+public class SpesialisasiModel implements Serializable {
     //id,nama,gelar
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long idSpesialisasi;
 
     @NotNull
     @Size(max = 255)
-    @Column(name="nama_spesialisasi", nullable = false)
+    @Column(name="nama", nullable = false)
     private String nama;
 
     @NotNull
     @Size(max = 255)
-    @Column(name="gelar_spesialisasi", nullable = false)
+    @Column(name="gelar", nullable = false)
     private String gelar;
 
-    @OneToMany(mappedBy = "dokter", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "spesialisasi", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<SpesialisasiDokterModel> listSpesialisasiDokter;
 
-    public BigInteger getId() {
-        return id;
+    public Long getIdSpesialisasi() {
+        return idSpesialisasi;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setIdSpesialisasi(Long idSpesialisasi) {
+        this.idSpesialisasi = idSpesialisasi;
     }
 
     public String getNama() {

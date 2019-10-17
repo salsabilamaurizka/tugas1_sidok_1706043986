@@ -1,69 +1,80 @@
 package tugasapap.sidok.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.bytebuddy.utility.RandomString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "dokter")
-
 public class DokterModel implements Serializable {
-    // id gatau
+
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long idDokter;
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "nama_dokter", nullable = false)
+    @Column(name = "nama", nullable = false)
     private String nama;
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "NIP_dokter", nullable = false)
+    @Column(name = "nip", nullable = false)
     private String nip;
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "NIK_dokter", nullable = false)
+    @Column(name = "nik", nullable = false)
     private String nik;
 
     @NotNull
-    @Column(name = "tanggal_lahir_dokter", nullable = false)
+    @Column(name = "tanggalLahir", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date tanggalLahir;
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "tempat_lahir_dokter", nullable = false)
+    @Column(name = "tempatLahir", nullable = false)
     private String tempatLahir;
 
     @NotNull
-    @Column(name = "jenis_kelamin_dokter", nullable = false)
+    @Column(name = "jenisKelamin", nullable = false)
     private Integer jenisKelamin;
 
-    @OneToMany(mappedBy = "dokter", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<SpesialisasiDokterModel> listSpesialisasiDokter;
+    @ManyToMany
+    @JoinTable(
+            name = "spesialisasi",
+            joinColumns = @JoinColumn(name = "idDokter"),
+            inverseJoinColumns = @JoinColumn(name = "idSpesialisasi"))
+    List<SpesialisasiModel> listSpesialisasi;
 
-    @OneToMany(mappedBy = "dokter", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<JadwalJagaModel> listJadwalJaga;
+    @ManyToMany
+    @JoinTable(
+            name = "poli",
+            joinColumns = @JoinColumn(name = "idDokter"),
+            inverseJoinColumns = @JoinColumn(name = "idSpesialisasi"))
+    List<PoliModel> listPoli;
 
-    public BigInteger getId() {
-        return id;
+    public Long getIdDokter() {
+        return idDokter;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setIdDokter(Long idDokter) {
+        this.idDokter = idDokter;
     }
 
     public String getNama() {
@@ -114,19 +125,24 @@ public class DokterModel implements Serializable {
         this.jenisKelamin = jenisKelamin;
     }
 
-    public List<SpesialisasiDokterModel> getListSpesialisasiDokter() {
-        return listSpesialisasiDokter;
-    }
+    public String generateNIPDokter() {
+        String NIP ="";
 
-    public void setListSpesialisasiDokter(List<SpesialisasiDokterModel> listSpesialisasiDokter) {
-        this.listSpesialisasiDokter = listSpesialisasiDokter;
-    }
+        NIP += java.time.LocalDate.now().getYear() + 5;
+        String tahun = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(tahun);
+        String strDate = simpleDateFormat.format(getTanggalLahir()).replaceAll("-", "");
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder hurufTemp = new StringBuilder(2);
+        for(int i = 0; i < 2; i++) {
+            int index = (int) (AlphaNumericString.length()* Math.random());
+            hurufTemp.append(AlphaNumericString.charAt(index));
+        }
+        String charRandom = hurufTemp.toString().toUpperCase();
+        NIP += strDate;
+        NIP += Integer.toString(getJenisKelamin());
+        NIP += charRandom;
 
-    public List<JadwalJagaModel> getListJadwalJaga() {
-        return listJadwalJaga;
-    }
-
-    public void setListJadwalJaga(List<JadwalJagaModel> listJadwalJaga) {
-        this.listJadwalJaga = listJadwalJaga;
+        return NIP;
     }
 }

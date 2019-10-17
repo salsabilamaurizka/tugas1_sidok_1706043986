@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Tambah Dokter</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <h3> Tambah Dokter </h3>
+    <div class="container-fluid">
+        <div class="w-50">
+            <form th:action="@{/dokter/tambah}" th:object="${dokter}" method="POST">
+                <div class="row pt-1">
+                    <label class="col-sm-4"> Nama </label>
+                    <input class="col-sm-7 form-control input-sm" type="text" name="nama"/>
+                </div>
+                <div class="row pt-1">
+                    <label class="col-sm-4"> NIK </label>
+                    <input class="col-sm-7 form-control input-sm" type="text" name="nik"/>
+                </div>
+                <div class="row pt-1">
+                    <label class="col-sm-4"> Tanggal Lahir</label>
+                    <input class="col-sm-7 form-control input-sm" type="date" name="tanggalLahir"/>
+                </div>
+                <div class="row pt-1">
+                    <label class="col-sm-4"> Tempat Lahir</label>
+                    <input class="col-sm-7 form-control input-sm" type="text" name="tempatLahir"/>
+                </div>
+                <div class="row pt-1">
+                    <label class="col-sm-4"> Jenis Kelamin</label>
+                    <select name="jenisKelamin" class="col-sm-7 form-control input-sm">
+                        <option th:value="1">Laki-Laki</option>
+                        <option th:value="2">Perempuan</option>
+                    </select>
+                </div>
+                <div class="row pt-1">
+                    <label class="col-sm-4"> Spesialisasi</label>
+                    <select name="spesialisasi" class="col-sm-7 form-control input-sm">
+                        <option th:value="1">Sp.A</option>
+                        <option th:value="2">Sp.U</option>
+                    </select>
+                <div>
+                <a th:href="@{/dokter/tambah}"> tambah </a>
+                </div>
+                <br>
+                <button class="btn btn-primary" type="submit"> Submit </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+</html>

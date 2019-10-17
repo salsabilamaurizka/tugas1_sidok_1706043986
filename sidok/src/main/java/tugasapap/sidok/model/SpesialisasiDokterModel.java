@@ -6,29 +6,50 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.List;
 
 @Entity
 @Table(name = "spesialisasi_dokter")
-
-public class SpesialisasiDokterModel {
+public class SpesialisasiDokterModel implements Serializable {
 
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;;
+    private Long idSpesialisasiDokter;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "dokterId", referencedColumnName = "idDokter", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private DokterModel DokterModel;
+    private DokterModel dokter;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "spesialisasiId", referencedColumnName = "idSpesialisasi", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private SpesialisasiModel spesialisasiModel;
+    private SpesialisasiModel spesialisasi;
 
+    public Long getIdSpesialisasiDokter() {
+        return idSpesialisasiDokter;
+    }
+
+    public void setIdSpesialisasiDokter(Long idSpesialisasiDokter) {
+        this.idSpesialisasiDokter = idSpesialisasiDokter;
+    }
+
+    public DokterModel getDokter() {
+        return dokter;
+    }
+
+    public void setDokter(DokterModel dokter) {
+        this.dokter = dokter;
+    }
+
+    public SpesialisasiModel getSpesialisasi() {
+        return spesialisasi;
+    }
+
+    public void setSpesialisasi(SpesialisasiModel spesialisasi) {
+        this.spesialisasi = spesialisasi;
+    }
 }
