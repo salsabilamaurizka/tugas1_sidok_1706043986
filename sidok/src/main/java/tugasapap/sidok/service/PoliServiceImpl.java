@@ -7,6 +7,7 @@ import tugasapap.sidok.repository.PoliDb;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,5 +24,15 @@ public class PoliServiceImpl implements PoliService{
     @Override
     public List<PoliModel> findAllPoli() {
         return poliDb.findAll();
+    }
+
+    @Override
+    public Optional<PoliModel> getPoliById(Long idPoli) {
+        return poliDb.findById(idPoli);
+    }
+
+    @Override
+    public Optional<PoliModel> getAllDokterIdPoli(Long idPoli) {
+        return poliDb.findById(idPoli);
     }
 }

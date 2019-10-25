@@ -35,6 +35,11 @@ public class DokterServiceImpl implements DokterService{
     }
 
     @Override
+    public Optional<DokterModel> getDokterByNip(String nip) {
+        return dokterDb.findByNip(nip);
+    }
+
+    @Override
     public DokterModel changeDokter(DokterModel dokterModel) {
         return null;
     }

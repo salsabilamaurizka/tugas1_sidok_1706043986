@@ -24,7 +24,6 @@
                         <th scope="col">NIK</th>
                         <th scope="col">Jenis Kelamin</th>
                         <th scope="col">Spesialisasi</th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
 
@@ -40,7 +39,7 @@
                         <td th:if="${dokter.jenisKelamin}==2">Perempuan</td>
                         <td></td>
                         <td>
-                            <form th:action="@{/dokter/tambahjadwal/}+${dokter.idDokter}">
+                            <form th:action="@{/jadwal/tambah/} + ${dokter.nip}">
                                 <button class="btn btn-sm btn-primary">
                                     Tambah Jadwal
                                 </button>

@@ -14,6 +14,8 @@ public interface DokterDb extends JpaRepository<DokterModel, Long> {
 
     Optional<DokterModel> findByNik(String nik);
 
+    Optional<DokterModel> findByNip(String nip);
+
     void delete(DokterModel dokter);
 
 }

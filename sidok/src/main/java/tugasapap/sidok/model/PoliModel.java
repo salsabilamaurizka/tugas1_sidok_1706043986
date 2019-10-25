@@ -30,12 +30,8 @@ public class PoliModel implements Serializable {
     @Column(name="lokasi", nullable = false)
     private String lokasi;
 
-    @ManyToMany
-    @JoinTable(
-            name = "dokter",
-            joinColumns = @JoinColumn(name = "idPoli"),
-            inverseJoinColumns = @JoinColumn(name = "idDokter"))
-    List<DokterModel> listDokter;
+    @OneToMany(mappedBy = "poli", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<JadwalJagaModel> listJadwalJaga;
 
     public Long getIdPoli() {
         return idPoli;

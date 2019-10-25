@@ -18,4 +18,6 @@ public interface DokterService {
     void deleteDokter(DokterModel dokter);
 
     Optional<DokterModel> getDokterByNik(String nik);
+
+    Optional<DokterModel> getDokterByNip(String nip);
 }

@@ -57,17 +57,14 @@ public class DokterModel implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "spesialisasi",
+            name = "spesialisasi_dokter",
             joinColumns = @JoinColumn(name = "idDokter"),
             inverseJoinColumns = @JoinColumn(name = "idSpesialisasi"))
     List<SpesialisasiModel> listSpesialisasi;
 
-    @ManyToMany
-    @JoinTable(
-            name = "poli",
-            joinColumns = @JoinColumn(name = "idDokter"),
-            inverseJoinColumns = @JoinColumn(name = "idSpesialisasi"))
-    List<PoliModel> listPoli;
+    @OneToMany(mappedBy = "dokter", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<JadwalJagaModel> listJadwalJaga;
+
 
     public Long getIdDokter() {
         return idDokter;

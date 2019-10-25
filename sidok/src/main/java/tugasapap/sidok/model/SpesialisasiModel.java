@@ -31,8 +31,8 @@ public class SpesialisasiModel implements Serializable {
     @Column(name="gelar", nullable = false)
     private String gelar;
 
-    @OneToMany(mappedBy = "spesialisasi", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<SpesialisasiDokterModel> listSpesialisasiDokter;
+    @ManyToMany(mappedBy = "listSpesialisasi")
+    List<DokterModel> listDokter;
 
     public Long getIdSpesialisasi() {
         return idSpesialisasi;
@@ -56,13 +56,5 @@ public class SpesialisasiModel implements Serializable {
 
     public void setGelar(String gelar) {
         this.gelar = gelar;
-    }
-
-    public List<SpesialisasiDokterModel> getListSpesialisasiDokter() {
-        return listSpesialisasiDokter;
-    }
-
-    public void setListSpesialisasiDokter(List<SpesialisasiDokterModel> listSpesialisasiDokter) {
-        this.listSpesialisasiDokter = listSpesialisasiDokter;
     }
 }

@@ -6,12 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tugasapap.sidok.model.DokterModel;
+import tugasapap.sidok.model.SpesialisasiModel;
 import tugasapap.sidok.service.DokterService;
+import tugasapap.sidok.service.SpesialisasiService;
 
 import java.util.List;
 
 @Controller
 public class DokterController {
+    @Autowired
+    private SpesialisasiService spesialisasiService;
+
     @Qualifier(value="dokterServiceImpl")
     @Autowired
     private DokterService dokterService;
@@ -40,9 +45,13 @@ public class DokterController {
     public String addDokterSubmit(@ModelAttribute DokterModel dokter, Model model) {
         String nip = dokter.generateNIPDokter();
         dokter.setNip(nip);
+//        List<SpesialisasiModel> spesialisasiNow = spesialisasiService.findAllSpesialisasi();
+
         dokterService.addDokter(dokter);
+//        model.addAttribute("listSpesialisasi", spesialisasiNow);
         model.addAttribute("nama", dokter.getNama());
         model.addAttribute("nip", dokter.getNip());
+
         return "add-dokter";
     }
 
