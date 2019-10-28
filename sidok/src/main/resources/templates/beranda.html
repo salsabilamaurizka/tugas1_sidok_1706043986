@@ -37,6 +37,7 @@
                         <td th:text="${dokter.nik}"></td>
                         <td th:if="${dokter.jenisKelamin}==1">Laki-Laki</td>
                         <td th:if="${dokter.jenisKelamin}==2">Perempuan</td>
+                        <td th:text="${dokter.listSpesialisasi[0].nama}"></td>
                         <td></td>
                         <td>
                             <form th:action="@{/jadwal/tambah/} + ${dokter.nip}">

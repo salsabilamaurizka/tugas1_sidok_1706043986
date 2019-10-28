@@ -11,10 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +57,7 @@ public class DokterModel implements Serializable {
             name = "spesialisasi_dokter",
             joinColumns = @JoinColumn(name = "idDokter"),
             inverseJoinColumns = @JoinColumn(name = "idSpesialisasi"))
-    List<SpesialisasiModel> listSpesialisasi;
+    private List<SpesialisasiModel> listSpesialisasi;
 
     @OneToMany(mappedBy = "dokter", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<JadwalJagaModel> listJadwalJaga;
@@ -141,5 +138,21 @@ public class DokterModel implements Serializable {
         NIP += charRandom;
 
         return NIP;
+    }
+
+    public List<SpesialisasiModel> getListSpesialisasi() {
+        return listSpesialisasi;
+    }
+
+    public void setListSpesialisasi(List<SpesialisasiModel> listSpesialisasi) {
+        this.listSpesialisasi = listSpesialisasi;
+    }
+
+    public List<JadwalJagaModel> getListJadwalJaga() {
+        return listJadwalJaga;
+    }
+
+    public void setListJadwalJaga(List<JadwalJagaModel> listJadwalJaga) {
+        this.listJadwalJaga = listJadwalJaga;
     }
 }

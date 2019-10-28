@@ -11,10 +11,13 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 
 <div class="container-fluid" align="center">
+    <br>
     <h3 th:text="'Sistem Informasi Dokter'"></h3>
+    <br>
     <div class="container-fluid">
         <div style="border:1px solid lightgrey">
-            <p class="p-3 bg-dark text-white">Daftar Dokter yang Bertugas di Poli ...</p>
+<!--            <p class="p-3 bg-dark text-white">Daftar Dokter yang Bertugas di Poli ...</p>-->
+            <p th:text="'Daftar Dokter yang Bertugas di ' + ${poli.nama}" class="p-3 bg-dark text-white" align="left"></p>
             <div class="px-3">
                 <table class="table" style="margin: 15px">
                     <thead>
@@ -25,10 +28,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="poli, iterationStatus : *{listDokterPoli}">
+                        <tr th:each="jadwalJagaPoli, iterationStatus : *{listJadwalJagaPoli}">
                             <td th:text="${iterationStatus.count}"></td>
-<!--                            <td th:text="${poli.namaDokter}"></td>-->
-<!--                            <td th:text="${poli.namaSpesialisasi}"></td>-->
+                            <td th:text="${jadwalJagaPoli.dokter.nama}"></td>
+<!--                            <td th:text="${jadwalJagaPoli.dokter.listSpesialisasi[0].nama}"></td>-->
                         </tr>
                     </tbody>
                 </table>

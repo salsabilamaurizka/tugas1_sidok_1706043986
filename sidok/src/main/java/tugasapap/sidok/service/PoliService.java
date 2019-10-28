@@ -13,5 +13,7 @@ public interface PoliService {
 
     Optional<PoliModel> getPoliById(Long idPoli);
 
-    Optional<PoliModel> getAllDokterIdPoli(Long idPoli);
+    Optional<PoliModel> getDokterByIdPoli(Long idPoli);
+
+    List<PoliModel> getPoliList();
 }

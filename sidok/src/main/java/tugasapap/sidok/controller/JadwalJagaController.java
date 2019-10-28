@@ -29,36 +29,43 @@ public class JadwalJagaController {
     @Autowired
     JadwalJagaService jadwalJagaService;
 
-    //URL mapping yang digunakan untuk mengakses halaman add jadwaljaga
-    @RequestMapping(value = "/jadwal/tambah/{nip}", method = RequestMethod.GET)
-    public String addJadwalJagaFormPage(@PathVariable String nip, Model model) {
-        DokterModel dokterNow  = dokterService.getDokterByNip(nip).get();
-        List<PoliModel> poliNow = poliService.findAllPoli();
-        List<JadwalJagaModel> listJadwal = jadwalJagaService.findAllJadwalJagaByIdDokter();
-        model.addAttribute("Dokter", dokterNow);
-        model.addAttribute("listPoli", poliNow);
-        model.addAttribute("jadwaljaga", listJadwal);
-        return "tambah-jadwal-jaga-poli";
+    @RequestMapping(value = "jadwal/tambah/{nip}", method = RequestMethod.GET)
+    public String jadwalJagaFormPage(@PathVariable String nip, Model model) {
+        JadwalJagaModel jadwalJagaModel = new JadwalJagaModel();
+        model.addAttribute("jadwalJaga", jadwalJagaModel);
+
+        DokterModel dokterModel = dokterService.getDokterByNip(nip).get();
+        model.addAttribute("dokter", dokterModel);
+
+        List<PoliModel> poliList = poliService.getPoliList();
+        model.addAttribute("poliList", poliList);
+
+        List<JadwalJagaModel> JadwalJagaModels = jadwalJagaService.getJadwalJagaByDokter(dokterModel);
+        model.addAttribute("jadwalJagaList", JadwalJagaModels);
+
+        return "form-add-jadwal-jaga";
     }
 
-    //URL mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add jadwaljaga
-    @RequestMapping(value = "/jadwal/tambah/{nip}", method = RequestMethod.POST)
-    public String addJadwalJagaSubmit(@PathVariable String nip,
-                                      @ModelAttribute("idPoli") Long idPoli,
-                                      @ModelAttribute("hari") String hari,
-                                      Model model) {
-        DokterModel dokterNow  = dokterService.getDokterByNip(nip).get();
-        PoliModel poliNow = poliService.getPoliById(idPoli).get();
-        JadwalJagaModel newJadwalJaga = new JadwalJagaModel();
-        newJadwalJaga.setPoli(poliNow);
-        newJadwalJaga.setDokter(dokterNow);
-        newJadwalJaga.setHari(hari);
-        jadwalJagaService.addJadwalJaga(newJadwalJaga);
-        model.addAttribute("Dokter", dokterNow);
-        model.addAttribute("listPoli", poliNow);
-        model.addAttribute("hari", hari);
-
+    @RequestMapping(value = "jadwal/tambah/{nip}", method = RequestMethod.POST)
+    public String tambahJadwalJagaSubmit(@PathVariable String nip, @ModelAttribute JadwalJagaModel jadwalJaga, Model model) {
+        DokterModel dokter = dokterService.getDokterByNip(nip).get();
+        jadwalJaga.setDokter(dokter);
+        jadwalJagaService.addJadwalJaga(jadwalJaga);
+        model.addAttribute("jadwalJaga",jadwalJaga);
+        model.addAttribute("dokter",dokter);
         return "add-jadwal-jaga";
+    }
+
+    // URL mapping view
+    @RequestMapping(path = "/poli/dokter/{idPoli}", method = RequestMethod.GET)
+    public String viewDokterPoli(@PathVariable Long idPoli, Model model) {
+        PoliModel poli = poliService.getPoliById(idPoli).get();
+        List<JadwalJagaModel> listJadwalJaga = jadwalJagaService.getJadwalJagaByPoli(poli);
+        model.addAttribute("listJadwalJagaPoli", listJadwalJaga);
+        model.addAttribute("poli", poli);
+
+        // Return view template
+        return "daftar-dokter-poli";
     }
 
 }

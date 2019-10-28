@@ -9,6 +9,7 @@ import tugasapap.sidok.repository.SpesialisasiDb;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,5 +21,10 @@ public class SpesialisasiServiceImpl implements SpesialisasiService{
     @Override
     public List<SpesialisasiModel> findAllSpesialisasi() {
         return spesialisasiDb.findAll();
+    }
+
+    @Override
+    public Optional<SpesialisasiModel> getSpesialisasiById(Long idSpesialisasi) {
+        return spesialisasiDb.findById(idSpesialisasi);
     }
 }

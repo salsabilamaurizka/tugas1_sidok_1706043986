@@ -41,7 +41,19 @@ public class DokterServiceImpl implements DokterService{
 
     @Override
     public DokterModel changeDokter(DokterModel dokterModel) {
-        return null;
+
+        DokterModel targetDokter = dokterDb.findById(dokterModel.getIdDokter()).get();
+
+        try {
+            targetDokter.setNama(dokterModel.getNama());
+            targetDokter.setTanggalLahir(dokterModel.getTanggalLahir());
+            targetDokter.setTempatLahir(dokterModel.getTempatLahir());
+            targetDokter.setJenisKelamin(dokterModel.getJenisKelamin());
+            dokterDb.save(targetDokter);
+            return targetDokter;
+        } catch (NullPointerException nullException) {
+            return null;
+        }
     }
 
     @Override

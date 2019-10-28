@@ -29,7 +29,17 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link active text-white" th:href="@{/}"> Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link active text-white" th:href="@{/poli}"> Poli <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link active text-white" th:href="@{/}"> Cari <span class="sr-only">(current)</span></a>
+<!--            <a class="nav-item nav-link dropdown-menu text-white" th:href="@{/}"> Cari <span class="sr-only">(current)</span></a>-->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" th:href="@{/}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cari
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" th:href="@{/cari?idSpesialisasi=} + ${idSpesialisasi} + @{&idPoli=} + ${idPoli}">Cari Dokter Spesialis pada Poli</a></li>
+                    <li><a class="dropdown-item" th:href="@{/dokter/cari/tugas-terbanyak?idPoli=} + ${idPoli}">Cari Dokter Tersibuk pada Poli</a></li>
+                </ul>
+            </li>
+
         </div>
     </div>
 </nav>

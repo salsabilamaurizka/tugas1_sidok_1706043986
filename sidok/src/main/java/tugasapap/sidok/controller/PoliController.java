@@ -44,15 +44,4 @@ public class PoliController {
         model.addAttribute("namaPoli", poli.getNama());
         return "add-poli";
     }
-
-    // URL mapping view
-    @RequestMapping(path = "/poli/dokter/{idPoli}", method = RequestMethod.GET)
-    public String viewDokterPoli(@PathVariable Long idPoli, Model model) {
-        PoliModel listDokterPoli = poliService.getAllDokterIdPoli(idPoli).get();
-        model.addAttribute("listDokterPoli", listDokterPoli);
-        // Return view template
-        return "daftar-dokter-poli";
-    }
-
-
 }

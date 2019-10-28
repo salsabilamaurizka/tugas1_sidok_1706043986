@@ -6,16 +6,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tugasapap.sidok.model.DokterModel;
+import tugasapap.sidok.model.JadwalJagaModel;
+import tugasapap.sidok.model.PoliModel;
 import tugasapap.sidok.model.SpesialisasiModel;
 import tugasapap.sidok.service.DokterService;
+import tugasapap.sidok.service.JadwalJagaService;
+import tugasapap.sidok.service.PoliService;
 import tugasapap.sidok.service.SpesialisasiService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class DokterController {
     @Autowired
     private SpesialisasiService spesialisasiService;
+
+    @Autowired
+    private PoliService poliService;
+
+    @Autowired
+    private JadwalJagaService jadwalJagaService;
 
     @Qualifier(value="dokterServiceImpl")
     @Autowired
@@ -105,4 +116,36 @@ public class DokterController {
             return "error-page";
         }
     }
+
+//    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idSpesialisasi","idPoli"})
+//    public String cariDokterByPoliSpesialisasi(
+//            @RequestParam(value="idPoli") Long idPoli,
+//            @RequestParam(value="idSpesialisasi") Long idSpesialisasi, Model model) {
+//
+//        List<PoliModel> poliList = poliService.findAllPoli();
+//        model.addAttribute("poliList", poliList);
+//
+//        List<SpesialisasiModel> spesialisasiList = spesialisasiService.findAllSpesialisasi();
+//        model.addAttribute("spesialisasiList", spesialisasiList);
+//
+//        PoliModel poli = poliService.getPoliById(idPoli).get();
+//        SpesialisasiModel spesialisasi = spesialisasiService.getSpesialisasiById(idSpesialisasi).get();
+//
+//        List<JadwalJagaModel> jadwalJagaByPoliList = jadwalJagaService.getJadwalJagaByPoli(poli);
+//
+//        List<DokterModel> listDokterMatch = new ArrayList<DokterModel>();
+//
+//        for (JadwalJagaModel jadwalJaga : jadwalJagaByPoliList) {
+//            int spesialisasiLength = jadwalJaga.getDokter().getListSpesialisasi().size();
+//            for (int i = 0; i < spesialisasiLength; i++) {
+//                if (spesialisasi == jadwalJaga.getDokter().getListSpesialisasi().get(i)) {
+//                    listDokterMatch.add(jadwalJaga.getDokter());
+//                }
+//            }
+//        }
+//
+//        model.addAttribute("listDokterMatch", listDokterMatch);
+//
+//        return "cari-dokter-spesialis-padaPoli";
+//    }
 }

@@ -32,7 +32,12 @@ public class PoliServiceImpl implements PoliService{
     }
 
     @Override
-    public Optional<PoliModel> getAllDokterIdPoli(Long idPoli) {
+    public Optional<PoliModel> getDokterByIdPoli(Long idPoli) {
         return poliDb.findById(idPoli);
+    }
+
+    @Override
+    public List<PoliModel> getPoliList() {
+        return poliDb.findAll();
     }
 }
