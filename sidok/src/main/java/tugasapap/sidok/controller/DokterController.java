@@ -120,7 +120,7 @@ public class DokterController {
 //    }
 
 
-    //URL mapping yang digunakan untuk delete restoran
+    //URL mapping yang digunakan untuk delete dokter
     @RequestMapping(value = "dokter/delete/{idDokter}")
     public String delete(@PathVariable Long idDokter, Model model) {
         try {
@@ -134,35 +134,47 @@ public class DokterController {
         }
     }
 
-//    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idSpesialisasi","idPoli"})
-//    public String cariDokterByPoliSpesialisasi(
-//            @RequestParam(value="idPoli") Long idPoli,
-//            @RequestParam(value="idSpesialisasi") Long idSpesialisasi, Model model) {
-//
-//        List<PoliModel> poliList = poliService.findAllPoli();
-//        model.addAttribute("poliList", poliList);
-//
-//        List<SpesialisasiModel> spesialisasiList = spesialisasiService.getSpesialisasiList();
-//        model.addAttribute("spesialisasiList", spesialisasiList);
-//
-//        PoliModel poli = poliService.getPoliById(idPoli).get();
-//        SpesialisasiModel spesialisasi = spesialisasiService.getSpesialisasiById(idSpesialisasi).get();
-//
-//        List<JadwalJagaModel> jadwalJagaByPoliList = jadwalJagaService.getJadwalJagaByPoli(poli);
-//
-//        List<DokterModel> listDokterMatch = new ArrayList<DokterModel>();
-//
-//        for (JadwalJagaModel jadwalJaga : jadwalJagaByPoliList) {
-//            int spesialisasiLength = jadwalJaga.getDokter().getListSpesialisasi().size();
-//            for (int i = 0; i < spesialisasiLength; i++) {
-//                if (spesialisasi == jadwalJaga.getDokter().getListSpesialisasi().get(i)) {
-//                    listDokterMatch.add(jadwalJaga.getDokter());
-//                }
-//            }
-//        }
-//        model.addAttribute("listDokterMatch", listDokterMatch);
-//        return "cari-dokter-spesialis-padaPoli";
-//    }
+    @RequestMapping(value = "/cari", method = RequestMethod.GET)
+    public String cariDokterByPoliAndSpesialisasi(Model model) {
+
+        List<PoliModel> poliList = poliService.getPoliList();
+        model.addAttribute("poliList", poliList);
+
+        List <SpesialisasiModel> spesialisasiList = spesialisasiService.getSpesialisasiList();
+        model.addAttribute("spesialisasiList", spesialisasiList);
+
+        return "cari-dokter-spesialis-pada-Poli";
+    }
+
+    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idSpesialisasi","idPoli"})
+    public String cariDokterByPoliSpesialisasi(
+            @RequestParam(value="idPoli") Long idPoli,
+            @RequestParam(value="idSpesialisasi") Long idSpesialisasi, Model model) {
+
+        List<PoliModel> poliList = poliService.findAllPoli();
+        model.addAttribute("poliList", poliList);
+
+        List<SpesialisasiModel> spesialisasiList = spesialisasiService.getSpesialisasiList();
+        model.addAttribute("spesialisasiList", spesialisasiList);
+
+        PoliModel poli = poliService.getPoliById(idPoli).get();
+        SpesialisasiModel spesialisasi = spesialisasiService.getSpesialisasiById(idSpesialisasi).get();
+
+        List<JadwalJagaModel> jadwalJagaByPoliList = jadwalJagaService.getJadwalJagaByPoli(poli);
+
+        List<DokterModel> listDokterMatch = new ArrayList<DokterModel>();
+
+        for (JadwalJagaModel jadwalJaga : jadwalJagaByPoliList) {
+            int spesialisasiLength = jadwalJaga.getDokter().getListSpesialisasi().size();
+            for (int i = 0; i < spesialisasiLength; i++) {
+                if (spesialisasi == jadwalJaga.getDokter().getListSpesialisasi().get(i)) {
+                    listDokterMatch.add(jadwalJaga.getDokter());
+                }
+            }
+        }
+        model.addAttribute("listDokterMatch", listDokterMatch);
+        return "cari-dokter-spesialis-pada-Poli";
+    }
 
 //    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idPoli"})
 //    public String cariDokterPoli(
