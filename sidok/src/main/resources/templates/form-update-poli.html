@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Tambah Dokter</title>
+    <title>Ubah Poli</title>
 
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
@@ -13,21 +13,21 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container-fluid">
     <br>
-    <h3 class="col-sm-4"> Tambah Poli </h3>
+    <h2 class="col-sm-4"> Ubah Poli </h2>
     <br>
     <div class="container-fluid">
         <div class="w-50">
-            <form th:action="@{/poli/tambah}" th:object="${poli}" method="POST">
+            <form th:action="@{/poli/update/{idPoli}(idPoli=${poli.idPoli})}" th:object="${poli}" method="POST">
                 <div class="row pt-1">
                     <label class="col-sm-4"> Nama </label>
-                    <input class="col-sm-7 form-control input-sm" type="text" name="nama"/>
+                    <input class="col-sm-7 form-control input-sm" type="text" th:value="${poli.nama}" name="nama"/>
                 </div>
                 <div class="row pt-1">
                     <label class="col-sm-4"> Lokasi </label>
-                    <input class="col-sm-7 form-control input-sm" type="text" name="lokasi"/>
+                    <input class="col-sm-7 form-control input-sm" type="text" th:value="${poli.lokasi}" name="lokasi"/>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
+                    <button class="btn brn-sm btn-primary" type="submit"> Submit </button>
                 </div>
             </form>
         </div>

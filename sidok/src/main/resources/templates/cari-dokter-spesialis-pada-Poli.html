@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Cari Dokter Spesialis pada Poli</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <br>
+    <h2>Cari Dokter Berdasarkan Spesialisasi dan Poli Tertentu</h2>
+    <br>
+    <form th:action="@{/cari}" method="GET">
+    <div class="container-fluid">
+        <div class="form-group row">
+            <label class="col-sm-1 col-form-label">Spesialisasi</label>
+            <div class="col-sm-3">
+                <select class="form-control container1" id="sel1"name="idSpesialisasi">
+                    <option value="">-- Silahkan Pilih Spesialisasi --</option>
+                    <option th:each="spesialisasi : ${spesialisasiList}" th:text="${spesialisasi.nama}" th:value="${spesialisasi.idSpesialisasi}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-1 col-form-label">Poli</label>
+            <div class="col-sm-3">
+                <select class="form-control container1" id="sel2" name="idPoli">
+                    <option value="">-- Silahkan Pilih Poli --</option>
+                    <option th:each="poli : ${poliList}" th:text="${poli.nama}" th:value="${poli.idPoli}"></option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-primary text-white" type="submit"> Submit </button>
+    </div>
+    </form>
+</div>
+<div class="col"></div>
+    <br>
+    <div class="container">
+        <div style="border:1px solid lightgrey">
+            <p class="p-3 bg-dark text-white" align="left"> Daftar Poli</p>
+            <div class="px-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">NIP</th>
+                            <th scope="col">NIK</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Spesialisasi</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="dokter, iterationStatus : ${listDokterMatch}">
+                        <tr>
+                            <th scope="row" th:text="${iterationStatus.count}"></th>
+                            <td><a th:text="${dokter.nama}" th:href="@{/dokter/} + ${dokter.nik}" ></a></td>
+                            <td th:text="${dokter.nip}"></td>
+                            <td th:text="${dokter.nik}"></td>
+                            <td th:if="${dokter.jenisKelamin}==1">Jenis Kelamin: Laki-Laki</td>
+                            <td th:if="${dokter.jenisKelamin}==2">Jenis Kelamin: Perempuan</td>
+                            <td>
+                                <ul th:each="spesialisasi, iterationStatus2 : ${dokter.listSpesialisasi}">
+                                    <li th:text="${spesialisasi.nama}"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

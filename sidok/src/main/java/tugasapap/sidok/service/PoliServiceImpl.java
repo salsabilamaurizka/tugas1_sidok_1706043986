@@ -40,4 +40,20 @@ public class PoliServiceImpl implements PoliService{
     public List<PoliModel> getPoliList() {
         return poliDb.findAll();
     }
+
+    @Override
+    public PoliModel changePoli(PoliModel poliModel) {
+
+        PoliModel targetPoli = poliDb.findById(poliModel.getIdPoli()).get();
+
+        try {
+            targetPoli.setNama(poliModel.getNama());
+            targetPoli.setLokasi(poliModel.getLokasi());
+            poliDb.save(targetPoli);
+            return targetPoli;
+        } catch (NullPointerException nullException) {
+            return null;
+        }
+    }
+
 }

@@ -44,4 +44,21 @@ public class PoliController {
         model.addAttribute("namaPoli", poli.getNama());
         return "add-poli";
     }
+
+    //API yang digunakan untuk menuju halaman form change poli
+    @RequestMapping(value = "/poli/update/{idPoli}", method = RequestMethod.GET)
+    public String changePoliFormPage(@PathVariable Long idPoli, Model model) {
+        PoliModel existingPoli = poliService.getPoliById(idPoli).get();
+        model.addAttribute("poli", existingPoli);
+        return "form-update-poli";
+    }
+
+    //API yang digunakan untuk submit form change poli
+    @RequestMapping(value = "/dokter/update/{idPoli}", method = RequestMethod.POST)
+    public String changePoliFormSubmit(@PathVariable Long idPoli, @ModelAttribute PoliModel poli, Model model) {
+        PoliModel newPoliData = poliService.changePoli(poli);
+        model.addAttribute("poli", newPoliData);
+        model.addAttribute("namaPoli", poli.getNama());
+        return "update-poli";
+    }
 }

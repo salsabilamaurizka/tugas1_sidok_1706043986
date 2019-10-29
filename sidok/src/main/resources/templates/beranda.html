@@ -15,7 +15,7 @@
     <div style="border:1px solid lightgrey">
         <p class="p-3 bg-dark text-white"> Daftar Dokter</p>
         <div class="px-3">
-            <table class="table" style="margin: 15px">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
@@ -44,17 +44,17 @@
                         </td>
                         <td>
                             <form th:action="@{/jadwal/tambah/} + ${dokter.nip}" th:method="GET">
-                                <button class="btn btn-primary text-white"value="submit">Tambah Jadwal</button>
+                                <button class="btn btn-sm btn-primary text-white"value="submit">Tambah Jadwal</button>
                             </form>
                         </td>
                         <td>
                             <form th:action="@{/dokter/update/} + ${dokter.idDokter}" th:method="GET">
-                                <button class="btn btn-dark text-white"value="submit">Ubah</button>
+                                <button class="btn btn-sm btn-dark text-white"value="submit">Ubah</button>
                             </form>
                         </td>
                         <td>
                             <form th:action="@{/dokter/delete/} + ${dokter.idDokter}" th:method="POST">
-                                <button class="btn btn-danger text-white"value="submit">Hapus</button>
+                                <button class="btn btn-sm btn-danger text-white"value="submit">Hapus</button>
                             </form>
                         </td>
                     </tr>
@@ -63,7 +63,7 @@
             <div align="right">
                 <td>
                     <form th:action="@{/dokter/tambah/}" th:method="GET">
-                        <button class="btn btn-dark text-white" value="submit">Tambah Dokter</button>
+                        <button class="btn btn-sm btn-dark text-white" value="submit">Tambah Dokter</button>
                     </form>
                 </td>
             </div>

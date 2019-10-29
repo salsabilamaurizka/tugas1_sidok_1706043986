@@ -16,4 +16,6 @@ public interface PoliService {
     Optional<PoliModel> getDokterByIdPoli(Long idPoli);
 
     List<PoliModel> getPoliList();
+
+    PoliModel changePoli(PoliModel poliModel);
 }

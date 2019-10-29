@@ -61,6 +61,7 @@ public class JadwalJagaController {
     public String viewDokterPoli(@PathVariable Long idPoli, Model model) {
         PoliModel poli = poliService.getPoliById(idPoli).get();
         List<JadwalJagaModel> listJadwalJaga = jadwalJagaService.getJadwalJagaByPoli(poli);
+
         model.addAttribute("listJadwalJagaPoli", listJadwalJaga);
         model.addAttribute("poli", poli);
 

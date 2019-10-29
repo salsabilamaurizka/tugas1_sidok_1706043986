@@ -9,49 +9,57 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container-fluid">
-    <br>
-    <h2 class="text-center align-content-center"> Sistem Informasi Dokter</h2>
-    <br>
-    <div style="border:1px solid lightgrey">
-        <p class="p-3 bg-dark text-white"> Daftar Poli</p>
-        <div class="px-3">
-            <table class="table" style="margin: 15px">
-                <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Lokasi</th>
-                </tr>
-                </thead>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-7">
+            <br>
+            <h2 class="text-center align-content-center"> Sistem Informasi Dokter</h2>
+            <br>
+            <div style="border:1px solid lightgrey">
+                <p class="p-3 bg-dark text-white"> Daftar Poli</p>
+                <div class="px-3">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Lokasi</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
 
-                <tbody>
-                <tr th:each="poli, iterationStatus : ${listPoli}">
-                    <td th:text="${iterationStatus.count}"></td>
-                    <td>
-                        <a th:href="@{/poli/dokter/} + ${poli.idPoli}" th:text="${poli.nama}"></a>
-                    </td>
-                    <td th:text="${poli.lokasi}"></td>
-                    <td>
-                        <form th:action="@{/poli/update/}+${poli.idPoli}">
-                            <button class="btn btn-sm bg-dark text-white">
-                                Ubah
-                            </button>
-                        </form>
-                    </td>
-                    <td>
-                        <form th:action="@{/poli/delete/}+${poli.idPoli}">
-                            <button class="btn btn-sm btn-danger">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        <tbody>
+                        <tr th:each="poli, iterationStatus : ${listPoli}">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td>
+                                <a th:href="@{/poli/dokter/} + ${poli.idPoli}" th:text="${poli.nama}"></a>
+                            </td>
+                            <td th:text="${poli.lokasi}"></td>
+                            <td>
+                                <form th:action="@{/poli/update/} + ${poli.idPoli}">
+                                    <button class="btn btn-sm bg-dark text-white">
+                                        Ubah
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{/poli/delete/}+${poli.idPoli}">
+                                    <button class="btn btn-sm btn-danger text-white">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right m-3">
+                    <a class="btn btn-sm bg-dark text-white" th:href="@{/poli/tambah}" style="color: white"> Tambah Poli </a>
+                </div>
+            </div>
         </div>
-        <div class="text-right m-3">
-            <a class="btn btn-sm bg-dark text-white" th:href="@{/poli/tambah}" style="color: white"> Tambah Poli </a>
-        </div>
+        <div class="col"></div>
     </div>
 </div>
 </body>
