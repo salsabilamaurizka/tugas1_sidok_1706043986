@@ -55,7 +55,7 @@
                             <th scope="col">Spesialisasi</th>
                         </tr>
                     </thead>
-                    <tbody th:each="dokter, iterationStatus : ${listDokterMatch}">
+                    <tbody th:each="dokter, iterationStatus : ${listDokter}">
                         <tr>
                             <th scope="row" th:text="${iterationStatus.count}"></th>
                             <td><a th:text="${dokter.nama}" th:href="@{/dokter/} + ${dokter.nik}" ></a></td>
