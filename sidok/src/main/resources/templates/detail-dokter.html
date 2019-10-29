@@ -15,15 +15,17 @@
             <div class="card mt-5">
                 <h2 class="card-title bg-light p-3">Detail Dokter</h2>
                 <div class="card-body">
-                    <h3 th:text="'Nama: ' + ${dokter.nama}"></h3>
-                    <h3 th:text="'NIP: ' + ${dokter.nip}"></h3>
-                    <h3 th:text="'NIK: ' + ${dokter.nik}"></h3>
-                    <h3 th:text="'Tempat Lahir: ' + ${dokter.tempatLahir}"></h3>
-                    <h3 th:text="'Tanggal Lahir: ' + ${#dates.format(dokter.tanggalLahir, 'yyyy-MM-dd')}"></h3>
-                    <h3 th:if="${dokter.jenisKelamin}==1">Jenis Kelamin: Laki-Laki</h3>
-                    <h3 th:if="${dokter.jenisKelamin}==2">Jenis Kelamin: Perempuan</h3>
-                    <!--    <h3 th:text="'Spesialisasi: ' + ${dokter.spesialisasi}"></h3>-->
-
+                    <p th:text="'Nama: ' + ${dokter.nama}"></p>
+                    <p th:text="'NIP: ' + ${dokter.nip}"></p>
+                    <p th:text="'NIK: ' + ${dokter.nik}"></p>
+                    <p th:text="'Tempat Lahir: ' + ${dokter.tempatLahir}"></p>
+                    <p th:text="'Tanggal Lahir: ' + ${#dates.format(dokter.tanggalLahir, 'yyyy-MM-dd')}"></p>
+                    <p th:if="${dokter.jenisKelamin}==1">Jenis Kelamin: Laki-Laki</p>
+                    <p th:if="${dokter.jenisKelamin}==2">Jenis Kelamin: Perempuan</p>
+                    <p>Spesialisasi:</p>
+                    <ul th:each="spesialisasi, iterartionStatus : *{dokter.listSpesialisasi}">
+                        <li th:text="${spesialisasi.nama}"></li>
+                    </ul>
                     <div class="text-right">
                         <form class="d-inline" th:action="@{/dokter/update/}+${dokter.idDokter}">
                             <button class="btn btn-sm bg-dark text-white">

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tugasapap.sidok.model.DokterModel;
 import tugasapap.sidok.model.JadwalJagaModel;
@@ -14,8 +15,9 @@ import tugasapap.sidok.service.JadwalJagaService;
 import tugasapap.sidok.service.PoliService;
 import tugasapap.sidok.service.SpesialisasiService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class DokterController {
@@ -36,27 +38,28 @@ public class DokterController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String view(Model model){
         List<DokterModel> allDokter = dokterService.findAllDokter();
-        // Add model restoran ke "resto" untuk dirender
         model.addAttribute("listDokter", allDokter);
-        // Return view template
         return "beranda";
     }
 
     //URL mapping yang digunakan untuk mengakses halaman add restoran
     @RequestMapping(value = "/dokter/tambah", method = RequestMethod.GET)
     public String addDokterFormPage(Model model) {
-//        String data = spesialisasiService.get
         DokterModel newDokter = new DokterModel();
+        List<SpesialisasiModel> spesialisasiModels = spesialisasiService.getSpesialisasiList();
+
+        ArrayList<SpesialisasiModel> listSpesialisasi = new ArrayList<SpesialisasiModel>();
+        listSpesialisasi.add(new SpesialisasiModel());
+        newDokter.setListSpesialisasi(listSpesialisasi);
         model.addAttribute("dokter", newDokter);
+        model.addAttribute("listSpesialisasi", spesialisasiModels);
         return "form-add-dokter";
     }
 
-    //URL mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add restoran
     @RequestMapping(value = "/dokter/tambah", method = RequestMethod.POST)
     public String addDokterSubmit(@ModelAttribute DokterModel dokter, Model model) {
-        String nip = dokter.generateNIPDokter();
+        String nip = dokterService.generateNIPDokter(dokter);
         dokter.setNip(nip);
-//        List<SpesialisasiModel> spesialisasiNow = spesialisasiService.findAllSpesialisasi();
 
         dokterService.addDokter(dokter);
 //        model.addAttribute("listSpesialisasi", spesialisasiNow);
@@ -64,6 +67,20 @@ public class DokterController {
         model.addAttribute("nip", dokter.getNip());
 
         return "add-dokter";
+    }
+
+    @RequestMapping(value="/dokter/tambah", method = RequestMethod.POST, params= {"addRow"})
+    public String addRowDokter(@ModelAttribute DokterModel dokterModel, BindingResult bindingResult, Model model) {
+        if (dokterModel.getListSpesialisasi() == null) {
+            dokterModel.setListSpesialisasi(new ArrayList<SpesialisasiModel>());
+        }
+        dokterModel.getListSpesialisasi().add(new SpesialisasiModel());
+        model.addAttribute("dokter", dokterModel);
+
+        List<SpesialisasiModel> spesialisasiList = spesialisasiService.getSpesialisasiList();
+        model.addAttribute("listSpesialisasi", spesialisasiList);
+
+        return "form-add-dokter";
     }
 
     // URL mapping view
@@ -125,7 +142,7 @@ public class DokterController {
 //        List<PoliModel> poliList = poliService.findAllPoli();
 //        model.addAttribute("poliList", poliList);
 //
-//        List<SpesialisasiModel> spesialisasiList = spesialisasiService.findAllSpesialisasi();
+//        List<SpesialisasiModel> spesialisasiList = spesialisasiService.getSpesialisasiList();
 //        model.addAttribute("spesialisasiList", spesialisasiList);
 //
 //        PoliModel poli = poliService.getPoliById(idPoli).get();
@@ -143,9 +160,44 @@ public class DokterController {
 //                }
 //            }
 //        }
-//
 //        model.addAttribute("listDokterMatch", listDokterMatch);
-//
 //        return "cari-dokter-spesialis-padaPoli";
+//    }
+
+//    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idPoli"})
+//    public String cariDokterPoli(
+//            @RequestParam(value="idPoli") Long idPoli, Model model) {
+//
+//        List<PoliModel> poliModels = poliService.getPoliList();
+//        model.addAttribute("poliList", poliModels);
+//
+//        PoliModel poli = poliService.getPoliById(idPoli).get();
+//
+//        List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getJadwalJagaByPoli(poli);
+//
+//        Map<Long, Integer> map = new HashMap<Long, Integer>();
+//
+//        for (int i = 0; i < jadwalJaga.size(); i++)  {
+//            Long idDokterNow = jadwalJaga.get(i).getDokter().getIdDokter();
+//            if (map.containsKey(idDokterNow)) {
+//                // map.get(idDokterNow)
+//                map.put(idDokterNow, map.get(idDokterNow) + 1);
+//            }
+//
+//            map.put(idDokterNow, 1);
+//        }
+//
+//        Long maxDokter = null;
+//        for (Map.Entry<Long, Integer> entry : map.entrySet()) {
+//            if (maxDokter == null || entry.getValue() > map.get(maxDokter)) {
+//                maxDokter = entry.getKey();
+//            }
+//        }
+//
+//        Optional<DokterModel> dokter = dokterService.getDokterByIdDokter(maxDokter);
+//
+//        model.addAttribute("dokterModel", dokter);
+//
+//        return "cari-dokter-yang-paling-banyak-bertugas";
 //    }
 }

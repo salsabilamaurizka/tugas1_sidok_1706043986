@@ -19,7 +19,7 @@ public class SpesialisasiServiceImpl implements SpesialisasiService{
     private SpesialisasiDb spesialisasiDb;
 
     @Override
-    public List<SpesialisasiModel> findAllSpesialisasi() {
+    public List<SpesialisasiModel> getSpesialisasiList() {
         return spesialisasiDb.findAll();
     }
 

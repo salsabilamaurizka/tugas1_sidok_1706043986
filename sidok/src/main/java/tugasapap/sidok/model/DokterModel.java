@@ -119,27 +119,6 @@ public class DokterModel implements Serializable {
         this.jenisKelamin = jenisKelamin;
     }
 
-    public String generateNIPDokter() {
-        String NIP ="";
-
-        NIP += java.time.LocalDate.now().getYear() + 5;
-        String tahun = "dd-MM-yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(tahun);
-        String strDate = simpleDateFormat.format(getTanggalLahir()).replaceAll("-", "");
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder hurufTemp = new StringBuilder(2);
-        for(int i = 0; i < 2; i++) {
-            int index = (int) (AlphaNumericString.length()* Math.random());
-            hurufTemp.append(AlphaNumericString.charAt(index));
-        }
-        String charRandom = hurufTemp.toString().toUpperCase();
-        NIP += strDate;
-        NIP += Integer.toString(getJenisKelamin());
-        NIP += charRandom;
-
-        return NIP;
-    }
-
     public List<SpesialisasiModel> getListSpesialisasi() {
         return listSpesialisasi;
     }

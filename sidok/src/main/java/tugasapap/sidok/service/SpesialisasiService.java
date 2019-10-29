@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface SpesialisasiService {
 
-    List<SpesialisasiModel> findAllSpesialisasi();
+    List<SpesialisasiModel> getSpesialisasiList();
 
     Optional<SpesialisasiModel> getSpesialisasiById(Long idSpesialisasi);
 }

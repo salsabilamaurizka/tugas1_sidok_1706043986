@@ -71,4 +71,25 @@ public class DokterServiceImpl implements DokterService{
         return dokterDb.findById(idDokter);
     }
 
+    @Override
+    public String generateNIPDokter(DokterModel dokter) {
+        String NIP ="";
+
+        NIP += java.time.LocalDate.now().getYear() + 5;
+        String tahun = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(tahun);
+        String strDate = simpleDateFormat.format(dokter.getTanggalLahir()).replaceAll("-", "");
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder hurufTemp = new StringBuilder(2);
+        for(int i = 0; i < 2; i++) {
+            int index = (int) (AlphaNumericString.length()* Math.random());
+            hurufTemp.append(AlphaNumericString.charAt(index));
+        }
+        String charRandom = hurufTemp.toString().toUpperCase();
+        NIP += strDate;
+        NIP += Integer.toString(dokter.getJenisKelamin());
+        NIP += charRandom;
+
+        return NIP;
+    }
 }

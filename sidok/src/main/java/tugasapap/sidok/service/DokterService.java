@@ -20,4 +20,6 @@ public interface DokterService {
     Optional<DokterModel> getDokterByNik(String nik);
 
     Optional<DokterModel> getDokterByNip(String nip);
+
+    public String generateNIPDokter(DokterModel dokter);
 }
