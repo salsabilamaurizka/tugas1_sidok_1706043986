@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <div class="container-fluid">
+        <br>
+        <h3> Cari Dokter Yang Paling Banyak Bertugas di Suatu Poli </h3>
+        <br>
+        <form th:action="@{/cari}" method="GET">
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">Poli</label>
+                <div class="col-sm-3">
+                    <select class="form-control container1" id="sel1" name="idPoli">
+                        <option value="">-- Silahkan Pilih Poli --</option>
+                        <option th:each="poli : ${poliList}" th:text="${poli.nama}" th:value="${poli.idPoli}"></option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary text-white" type="submit"> Submit </button>
+        </form>
+
+        <br>
+        <div th:unless="${data == 'kosong'}">
+            <div class="card" style="width: 25rem;">
+                <h2 class="card-title bg-light p-3">Detail Dokter</h2>
+                <div class="card-body">
+                    <p th:text="'Nama: ' + ${dokter.nama}"></p>
+                    <p th:text="'NIP: ' + ${dokter.nip}"></p>
+                    <p th:text="'NIK: ' + ${dokter.nik}"></p>
+                    <p th:text="'Tempat Lahir: ' + ${dokter.tempatLahir}"></p>
+                    <p th:text="'Tanggal Lahir: ' + ${#dates.format(dokter.tanggalLahir, 'yyyy-MM-dd')}"></p>
+                    <p th:if="${dokter.jenisKelamin}==1">Jenis Kelamin: Laki-Laki</p>
+                    <p th:if="${dokter.jenisKelamin}==2">Jenis Kelamin: Perempuan</p>
+                    <p>Spesialisasi:</p>
+                    <ul th:each="spesialisasi, iterartionStatus : *{dokter.listSpesialisasi}">
+                        <li th:text="${spesialisasi.nama}"></li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -46,13 +46,13 @@ public class DokterController {
     @RequestMapping(value = "/dokter/tambah", method = RequestMethod.GET)
     public String addDokterFormPage(Model model) {
         DokterModel newDokter = new DokterModel();
-        List<SpesialisasiModel> spesialisasiModels = spesialisasiService.getSpesialisasiList();
+        List<SpesialisasiModel> spesialisasi = spesialisasiService.getSpesialisasiList();
 
         ArrayList<SpesialisasiModel> listSpesialisasi = new ArrayList<SpesialisasiModel>();
         listSpesialisasi.add(new SpesialisasiModel());
         newDokter.setListSpesialisasi(listSpesialisasi);
         model.addAttribute("dokter", newDokter);
-        model.addAttribute("listSpesialisasi", spesialisasiModels);
+        model.addAttribute("listSpesialisasi", spesialisasi);
         return "form-add-dokter";
     }
 
@@ -161,55 +161,50 @@ public class DokterController {
         SpesialisasiModel spesialisasi = spesialisasiService.getSpesialisasiById(idSpesialisasi).get();
 
         List<JadwalJagaModel> jadwalJagaByPoliList = jadwalJagaService.getJadwalJagaByPoli(poli);
-
-        List<DokterModel> listDokterMatch = new ArrayList<DokterModel>();
+        List<DokterModel> listDokter = new ArrayList<DokterModel>();
 
         for (JadwalJagaModel jadwalJaga : jadwalJagaByPoliList) {
             int spesialisasiLength = jadwalJaga.getDokter().getListSpesialisasi().size();
             for (int i = 0; i < spesialisasiLength; i++) {
                 if (spesialisasi == jadwalJaga.getDokter().getListSpesialisasi().get(i)) {
-                    listDokterMatch.add(jadwalJaga.getDokter());
+                    listDokter.add(jadwalJaga.getDokter());
                 }
             }
         }
-        model.addAttribute("listDokterMatch", listDokterMatch);
+        model.addAttribute("listDokter", listDokter);
         return "cari-dokter-spesialis-pada-Poli";
     }
 
-//    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idPoli"})
-//    public String cariDokterPoli(
-//            @RequestParam(value="idPoli") Long idPoli, Model model) {
-//
-//        List<PoliModel> poliModels = poliService.getPoliList();
-//        model.addAttribute("poliList", poliModels);
-//
-//        PoliModel poli = poliService.getPoliById(idPoli).get();
-//
-//        List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getJadwalJagaByPoli(poli);
-//
-//        Map<Long, Integer> map = new HashMap<Long, Integer>();
-//
-//        for (int i = 0; i < jadwalJaga.size(); i++)  {
-//            Long idDokterNow = jadwalJaga.get(i).getDokter().getIdDokter();
-//            if (map.containsKey(idDokterNow)) {
-//                // map.get(idDokterNow)
-//                map.put(idDokterNow, map.get(idDokterNow) + 1);
-//            }
-//
-//            map.put(idDokterNow, 1);
-//        }
-//
-//        Long maxDokter = null;
-//        for (Map.Entry<Long, Integer> entry : map.entrySet()) {
-//            if (maxDokter == null || entry.getValue() > map.get(maxDokter)) {
-//                maxDokter = entry.getKey();
-//            }
-//        }
-//
-//        Optional<DokterModel> dokter = dokterService.getDokterByIdDokter(maxDokter);
-//
-//        model.addAttribute("dokterModel", dokter);
-//
-//        return "cari-dokter-yang-paling-banyak-bertugas";
-//    }
+    @RequestMapping(value = "/cari-yang-terbanyak", method = RequestMethod.GET)
+    public String cariDokterTerbanyakPoli(Model model) {
+
+        List<PoliModel> poliList = poliService.getPoliList();
+        model.addAttribute("poliList", poliList);
+
+        return "cari-dokter-paling-banyak-bertugas";
+    }
+
+    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idPoli"})
+    public String cariDokterTerbanyakDiPoli(
+            @RequestParam(value="idPoli") Long idPoli, Model model) {
+
+        List<PoliModel> poliList = poliService.getPoliList();
+        model.addAttribute("poliList", poliList);
+
+        if(idPoli == 0) {
+            DokterModel dokter = new DokterModel();
+            PoliModel poli = new PoliModel();
+            model.addAttribute("poli", poli);
+            model.addAttribute("dokter", dokter);
+            model.addAttribute("data", "kosong");
+            return "cari-dokter-paling-banyak-bertugas";
+        }
+        else{
+            DokterModel hasilDokter = jadwalJagaService.findMostDokter(idPoli);
+            Optional<PoliModel> poli = poliService.getPoliById(idPoli);
+            model.addAttribute("poli", poli);
+            model.addAttribute("dokter", hasilDokter);
+            return "cari-dokter-paling-banyak-bertugas";
+        }
+    }
 }

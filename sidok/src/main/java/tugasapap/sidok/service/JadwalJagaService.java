@@ -4,7 +4,6 @@ import tugasapap.sidok.model.DokterModel;
 import tugasapap.sidok.model.JadwalJagaModel;
 import tugasapap.sidok.model.PoliModel;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +15,7 @@ public interface JadwalJagaService {
 
     List<JadwalJagaModel> getJadwalJagaByPoli(PoliModel poliModel);
 
+    DokterModel findMostDokter(Long idPoli);
+
+    List<DokterModel> findAllDokterByIdPoli(Long idPoli);
 }
