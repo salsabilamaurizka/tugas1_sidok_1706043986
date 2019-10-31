@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Tambah Dokter</title>
+    <title>Tambah Poli</title>
 
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
@@ -11,27 +11,30 @@
 <body>
 
 <nav th:replace="fragments/fragment :: navbar"></nav>
-<div class="container-fluid">
-    <br>
-    <h3 class="col-sm-4"> Tambah Poli </h3>
-    <br>
-    <div class="container-fluid">
-        <div class="w-50">
-            <form th:action="@{/poli/tambah}" th:object="${poli}" method="POST">
-                <div class="row pt-1">
-                    <label class="col-sm-4"> Nama </label>
-                    <input class="col-sm-7 form-control input-sm" type="text" name="nama"/>
-                </div>
-                <div class="row pt-1">
-                    <label class="col-sm-4"> Lokasi </label>
-                    <input class="col-sm-7 form-control input-sm" type="text" name="lokasi"/>
-                </div>
-                <div>
-                    <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
-                </div>
-            </form>
+<div class="row justify-content-center">
+    <div class="card mt-5" style="width: 70rem;">
+        <div class="card-body">
+        <h2 class="text-center"> Tambah Poli </h2>
+        <br>
+        <div class="container-fluid" style="margin-left:280px">
+            <div class="w-50">
+                <form th:action="@{/poli/tambah}" th:object="${poli}" method="POST">
+                    <div class="row pt-1">
+                        <label class="col-sm-4"> Nama </label>
+                        <input class="col-sm-7 form-control input-sm" type="text" name="nama"/>
+                    </div>
+                    <div class="row pt-1">
+                        <label class="col-sm-4"> Lokasi </label>
+                        <input class="col-sm-7 form-control input-sm" type="text" name="lokasi"/>
+                    </div>
+                    <br>
+                    <div>
+                        <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
+                    </div>
+                </form>
+            </div>
         </div>
-
+        </div>
     </div>
 </div>
 

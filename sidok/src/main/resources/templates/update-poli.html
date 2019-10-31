@@ -8,7 +8,11 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-
-<h2 th:text="'Poli ' + ${namaPoli} + ' berhasil diubah.'"></h2>
+<div class="container-fluid">
+    <br>
+    <div class="container-fluid">
+        <h3 th:text="'Poli ' + ${namaPoli} + ' berhasil diubah.'"></h3>
+    </div>
+</div>
 </body>
 </html>

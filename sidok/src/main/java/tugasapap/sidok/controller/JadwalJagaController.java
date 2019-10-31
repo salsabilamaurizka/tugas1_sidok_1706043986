@@ -29,6 +29,7 @@ public class JadwalJagaController {
     @Autowired
     JadwalJagaService jadwalJagaService;
 
+    //URL mapping yang digunakan untuk mengakses halaman add jadwal jaga
     @RequestMapping(value = "jadwal/tambah/{nip}", method = RequestMethod.GET)
     public String jadwalJagaFormPage(@PathVariable String nip, Model model) {
         JadwalJagaModel jadwalJagaModel = new JadwalJagaModel();
@@ -46,6 +47,7 @@ public class JadwalJagaController {
         return "form-add-jadwal-jaga";
     }
 
+    //URL mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add jadwal jaga
     @RequestMapping(value = "jadwal/tambah/{nip}", method = RequestMethod.POST)
     public String tambahJadwalJagaSubmit(@PathVariable String nip, @ModelAttribute JadwalJagaModel jadwalJaga, Model model) {
         DokterModel dokter = dokterService.getDokterByNip(nip).get();
@@ -56,7 +58,7 @@ public class JadwalJagaController {
         return "add-jadwal-jaga";
     }
 
-    // URL mapping view
+    // URL mapping view poli
     @RequestMapping(path = "/poli/dokter/{idPoli}", method = RequestMethod.GET)
     public String viewDokterPoli(@PathVariable Long idPoli, Model model) {
         PoliModel poli = poliService.getPoliById(idPoli).get();

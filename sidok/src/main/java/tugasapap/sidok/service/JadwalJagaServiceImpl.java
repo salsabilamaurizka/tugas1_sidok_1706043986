@@ -9,7 +9,10 @@ import tugasapap.sidok.model.PoliModel;
 import tugasapap.sidok.repository.DokterDb;
 import tugasapap.sidok.repository.JadwalJagaDb;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -37,26 +40,41 @@ public class JadwalJagaServiceImpl implements JadwalJagaService{
     }
 
     @Override
-    public List<DokterModel> findAllDokterByIdPoli(Long idPoli) {
-        return dokterDb.findAll();
-    }
+    public List<DokterModel> getDokterTerbanyakBertugasdiPoli(PoliModel poli) {
+        try {
 
-    @Override
-    public DokterModel findMostDokter(Long idPoli) {
-        List<DokterModel> listDokterPoli = findAllDokterByIdPoli(idPoli);
-        DokterModel hasilDokter = new DokterModel();
-        int jumlah = 0;
-        for (DokterModel i : listDokterPoli) {
-            int temp = 0;
-            for (DokterModel j : listDokterPoli) {
-                if (i.equals(j)) {
-                    temp++;
+            List<JadwalJagaModel> jadwalJagaList = jadwalJagaDb.findJadwalJagaByPoli(poli);
+            List<DokterModel> listDokterByPoli = new ArrayList<>();
+            for (JadwalJagaModel jadwalJaga : jadwalJagaList) {
+                listDokterByPoli.add(jadwalJaga.getDokter());
+            }
+
+            Map<DokterModel, Integer> map = new HashMap<>();
+            for (DokterModel dokter : listDokterByPoli) {
+                Integer val = map.get(dokter);
+                map.put(dokter, val == null ? 1 : val + 1);
+            }
+
+            Map.Entry<DokterModel, Integer> max = null;
+            for (Map.Entry<DokterModel, Integer> e : map.entrySet()) {
+                if (max == null || e.getValue() > max.getValue()) max = e;
+            }
+
+            int maxValue = max.getValue();
+
+            //list untuk memasukkan dokter yang tersibuk
+            List<DokterModel> listDokterTersibuk = new ArrayList<>();
+
+            //mencari dokter dengan value yang sama seperti max lalu dimasukkan ke dalam list
+            for (Map.Entry<DokterModel, Integer> s : map.entrySet()) {
+                if (s.getValue() == maxValue) {
+                    listDokterTersibuk.add(s.getKey());
                 }
             }
-            if (temp > jumlah) {
-                hasilDokter = i;
-            }
+            return maxValue == 0 ? null : listDokterTersibuk;
+
+        } catch (NullPointerException e) {
+            return null;
         }
-        return hasilDokter;
     }
 }

@@ -42,7 +42,7 @@ public class DokterController {
         return "beranda";
     }
 
-    //URL mapping yang digunakan untuk mengakses halaman add restoran
+    //URL mapping yang digunakan untuk mengakses halaman add dokter
     @RequestMapping(value = "/dokter/tambah", method = RequestMethod.GET)
     public String addDokterFormPage(Model model) {
         DokterModel newDokter = new DokterModel();
@@ -62,7 +62,6 @@ public class DokterController {
         dokter.setNip(nip);
 
         dokterService.addDokter(dokter);
-//        model.addAttribute("listSpesialisasi", spesialisasiNow);
         model.addAttribute("nama", dokter.getNama());
         model.addAttribute("nip", dokter.getNip());
 
@@ -92,33 +91,25 @@ public class DokterController {
             return "detail-dokter";
     }
 
-    //API yang digunakan untuk menuju halaman form change restoran
+    //API yang digunakan untuk menuju halaman form change dokter
     @RequestMapping(value = "/dokter/update/{idDokter}", method = RequestMethod.GET)
     public String changeDokterFormPage(@PathVariable Long idDokter, Model model) {
-        //Mengambil existing data restoran
+        //Mengambil existing data dokter
         DokterModel existingDokter = dokterService.getDokterByIdDokter(idDokter).get();
         model.addAttribute("dokter", existingDokter);
         return "form-update-dokter";
     }
 
-    //API yang digunakan untuk submit form change restoran
+    //API yang digunakan untuk submit form change dokter
     @RequestMapping(value = "/dokter/update/{idDokter}", method = RequestMethod.POST)
     public String changeDokterFormSubmit(@PathVariable Long idDokter, @ModelAttribute DokterModel dokter, Model model) {
+        String nip = dokterService.generateNIPDokter(dokter);
+        dokter.setNip(nip);
         DokterModel newDokterData = dokterService.changeDokter(dokter);
         model.addAttribute("dokter", newDokterData);
-        model.addAttribute("nama", dokter.getNama());
-        return "update-dokter";
+
+        return "detail-dokter";
     }
-
-//    @RequestMapping(value = "/dokter/update/{idDokter}", method = RequestMethod.POST)
-//    public RedirectView changeDokterFormSubmit(@PathVariable Long idDokter, @ModelAttribute DokterModel dokter, Model model, RedirectAttributes attributes) {
-//        DokterModel newDokterData = dokterService.changeDokter(dokter);
-////        model.addAttribute("dokter", newDokterData);
-////        model.addAttribute("nama", dokter.getNama());
-//        attributes.addAttribute("nikDokter", newDokterData.getNik());
-//        return new RedirectView("/dokter");
-//    }
-
 
     //URL mapping yang digunakan untuk delete dokter
     @RequestMapping(value = "dokter/delete/{idDokter}")
@@ -134,6 +125,7 @@ public class DokterController {
         }
     }
 
+    //mapping untuk mencari dokter beradasarkan poli dan spesialisasi yang dipilih
     @RequestMapping(value = "/cari", method = RequestMethod.GET)
     public String cariDokterByPoliAndSpesialisasi(Model model) {
 
@@ -146,6 +138,7 @@ public class DokterController {
         return "cari-dokter-spesialis-pada-Poli";
     }
 
+    //mapping untuk mencari dokter beradasarkan poli dan spesialisasi yang dipilih
     @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idSpesialisasi","idPoli"})
     public String cariDokterByPoliSpesialisasi(
             @RequestParam(value="idPoli") Long idPoli,
@@ -175,8 +168,9 @@ public class DokterController {
         return "cari-dokter-spesialis-pada-Poli";
     }
 
-    @RequestMapping(value = "/cari-yang-terbanyak", method = RequestMethod.GET)
-    public String cariDokterTerbanyakPoli(Model model) {
+    //mapping untuk mencari dokter tersibuk di suatu poli
+    @RequestMapping(value = "/dokter/cari/tugas-terbanyak", method = RequestMethod.GET)
+    public String cariDokterTerbanyakPoliForm(Model model) {
 
         List<PoliModel> poliList = poliService.getPoliList();
         model.addAttribute("poliList", poliList);
@@ -184,27 +178,20 @@ public class DokterController {
         return "cari-dokter-paling-banyak-bertugas";
     }
 
-    @RequestMapping(value="/cari", method=RequestMethod.GET, params= {"idPoli"})
-    public String cariDokterTerbanyakDiPoli(
+    //mapping untuk mencari dokter tersibuk di suatu poli
+    @RequestMapping(value="/dokter/cari/tugas-terbanyak", method=RequestMethod.POST)
+    public String cariDokterTerbanyakDiPoliSubmit(
             @RequestParam(value="idPoli") Long idPoli, Model model) {
 
         List<PoliModel> poliList = poliService.getPoliList();
         model.addAttribute("poliList", poliList);
 
-        if(idPoli == 0) {
-            DokterModel dokter = new DokterModel();
-            PoliModel poli = new PoliModel();
-            model.addAttribute("poli", poli);
-            model.addAttribute("dokter", dokter);
-            model.addAttribute("data", "kosong");
-            return "cari-dokter-paling-banyak-bertugas";
-        }
-        else{
-            DokterModel hasilDokter = jadwalJagaService.findMostDokter(idPoli);
-            Optional<PoliModel> poli = poliService.getPoliById(idPoli);
-            model.addAttribute("poli", poli);
-            model.addAttribute("dokter", hasilDokter);
-            return "cari-dokter-paling-banyak-bertugas";
-        }
+        PoliModel poliModel = poliService.getPoliById(idPoli).get();
+
+        List<DokterModel> dokterModel = jadwalJagaService.getDokterTerbanyakBertugasdiPoli(poliModel);
+
+        model.addAttribute("dokterModel", dokterModel);
+
+        return "cari-dokter-paling-banyak-bertugas";
     }
 }

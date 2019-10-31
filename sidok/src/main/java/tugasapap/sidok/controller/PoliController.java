@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import tugasapap.sidok.model.DokterModel;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import tugasapap.sidok.model.PoliModel;
 import tugasapap.sidok.service.PoliService;
 
@@ -39,10 +40,22 @@ public class PoliController {
 
     //URL mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add poli
     @RequestMapping(value = "/poli/tambah", method = RequestMethod.POST)
-    public String addPoliSubmit(@ModelAttribute PoliModel poli, Model model) {
+    public RedirectView addPoliSubmit(@ModelAttribute PoliModel poli, RedirectAttributes attributes) {
         poliService.addPoli(poli);
-        model.addAttribute("namaPoli", poli.getNama());
-        return "add-poli";
+        attributes.addFlashAttribute("success", true);
+        attributes.addFlashAttribute("idPoli", poli.getIdPoli());
+        return new RedirectView("/poli/view/" + poli.getIdPoli());
+//        poliService.addPoli(poli);
+//        model.addAttribute("poli", poli);
+//        return "detail-poli";
+    }
+
+    //URL mapping yang digunakan untuk melihat detail dari suatu poli
+    @RequestMapping(value = "/poli/view/{idPoli}", method = RequestMethod.GET)
+    private String viewPoli(@PathVariable(value = "idPoli") Long idPoli, Model model) {
+        PoliModel poli = poliService.getPoliById(idPoli).get();
+        model.addAttribute("poli", poli);
+        return "detail-poli";
     }
 
     //API yang digunakan untuk menuju halaman form change poli
@@ -54,11 +67,25 @@ public class PoliController {
     }
 
     //API yang digunakan untuk submit form change poli
-    @RequestMapping(value = "/dokter/update/{idPoli}", method = RequestMethod.POST)
+    @RequestMapping(value = "/poli/update/{idPoli}", method = RequestMethod.POST)
     public String changePoliFormSubmit(@PathVariable Long idPoli, @ModelAttribute PoliModel poli, Model model) {
         PoliModel newPoliData = poliService.changePoli(poli);
         model.addAttribute("poli", newPoliData);
         model.addAttribute("namaPoli", poli.getNama());
         return "update-poli";
+    }
+
+    //URL mapping yang digunakan untuk delete poli
+    @RequestMapping(value = "poli/delete/{idPoli}")
+    public String delete(@PathVariable Long idPoli, Model model) {
+        try {
+            PoliModel poliData = poliService.getPoliById(idPoli).get();
+            model.addAttribute("namaPoli", poliData.getNama());
+            poliService.deletePoli(poliData);
+            return "delete-poli";
+        }
+        catch (Exception e){
+            return "error-page";
+        }
     }
 }

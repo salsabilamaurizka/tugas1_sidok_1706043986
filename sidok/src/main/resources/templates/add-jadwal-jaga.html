@@ -8,9 +8,13 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-
-<h2 th:text="'Berhasil menambahkan jadwal jaga untuk Dokter ' + ${dokter.nama} + ' di ' + ${jadwalJagaModel.poli.nama} + ' pada hari ' + ${jadwalJaga.hari}"></h2>
-<br>
-<a th:href="@{/}"> Kembali ke Home</a>
+<div class="container-fluid">
+    <br>
+    <div class="container-fluid">
+        <h3 th:text="'Berhasil menambahkan jadwal jaga untuk Dokter ' + ${dokter.nama} + ' di ' + ${jadwalJagaModel.poli.nama} + ' pada hari ' + ${jadwalJaga.hari}"></h3>
+        <br>
+        <a th:href="@{/}"> Kembali ke Home</a>
+    </div>
+</div>
 </body>
 </html>

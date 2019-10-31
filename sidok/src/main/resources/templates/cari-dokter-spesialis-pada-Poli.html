@@ -19,7 +19,7 @@
         <div class="form-group row">
             <label class="col-sm-1 col-form-label">Spesialisasi</label>
             <div class="col-sm-3">
-                <select class="form-control container1" id="sel1"name="idSpesialisasi">
+                <select class="form-control container1" id="sel1"name="idSpesialisasi" required>
                     <option value="">-- Silahkan Pilih Spesialisasi --</option>
                     <option th:each="spesialisasi : ${spesialisasiList}" th:text="${spesialisasi.nama}" th:value="${spesialisasi.idSpesialisasi}"></option>
                 </select>
@@ -28,7 +28,7 @@
         <div class="form-group row">
             <label class="col-sm-1 col-form-label">Poli</label>
             <div class="col-sm-3">
-                <select class="form-control container1" id="sel2" name="idPoli">
+                <select class="form-control container1" id="sel2" name="idPoli" required>
                     <option value="">-- Silahkan Pilih Poli --</option>
                     <option th:each="poli : ${poliList}" th:text="${poli.nama}" th:value="${poli.idPoli}"></option>
                 </select>
@@ -38,9 +38,9 @@
     </div>
     </form>
 </div>
-<div class="col"></div>
+<div class="container-fluid">
     <br>
-    <div class="container">
+    <div class="container-fluid">
         <div style="border:1px solid lightgrey">
             <p class="p-3 bg-dark text-white" align="left"> Daftar Poli</p>
             <div class="px-3">
@@ -61,8 +61,8 @@
                             <td><a th:text="${dokter.nama}" th:href="@{/dokter/} + ${dokter.nik}" ></a></td>
                             <td th:text="${dokter.nip}"></td>
                             <td th:text="${dokter.nik}"></td>
-                            <td th:if="${dokter.jenisKelamin}==1">Jenis Kelamin: Laki-Laki</td>
-                            <td th:if="${dokter.jenisKelamin}==2">Jenis Kelamin: Perempuan</td>
+                            <td th:if="${dokter.jenisKelamin}==1">Laki-Laki</td>
+                            <td th:if="${dokter.jenisKelamin}==2">Perempuan</td>
                             <td>
                                 <ul th:each="spesialisasi, iterationStatus2 : ${dokter.listSpesialisasi}">
                                     <li th:text="${spesialisasi.nama}"></li>
@@ -74,6 +74,7 @@
             </div>
         </div>
     </div>
+    <br>
 </div>
 
 </body>

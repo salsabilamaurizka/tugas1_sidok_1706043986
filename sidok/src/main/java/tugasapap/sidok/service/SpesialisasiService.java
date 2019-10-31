@@ -10,4 +10,6 @@ public interface SpesialisasiService {
     List<SpesialisasiModel> getSpesialisasiList();
 
     Optional<SpesialisasiModel> getSpesialisasiById(Long idSpesialisasi);
+
+    void setJumlahDokterSpesialisasi();
 }

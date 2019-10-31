@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-    <title>Tambah Dokter</title>
+    <title>Hapus Dokter</title>
 
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-
-<h2 th:text="'Dokter ' + ${namaDokter} + ' berhasil dihapus.'"></h2>
-<br>
-<a th:href="@{/}"> Kembali ke Home</a>
+<div class="container-fluid">
+    <br>
+    <div class="container-fluid">
+        <h3 th:text="'Dokter ' + ${namaDokter} + ' berhasil dihapus.'"></h3>
+        <br>
+        <a th:href="@{/}"> Kembali ke Home</a>
+    </div>
+</div>
 </body>
 </html>

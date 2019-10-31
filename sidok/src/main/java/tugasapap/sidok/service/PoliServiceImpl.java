@@ -32,6 +32,11 @@ public class PoliServiceImpl implements PoliService{
     }
 
     @Override
+    public void deletePoli(PoliModel poli) {
+        poliDb.delete(poli);
+    }
+
+    @Override
     public Optional<PoliModel> getDokterByIdPoli(Long idPoli) {
         return poliDb.findById(idPoli);
     }

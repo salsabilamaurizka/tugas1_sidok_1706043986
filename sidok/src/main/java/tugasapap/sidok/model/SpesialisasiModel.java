@@ -34,6 +34,24 @@ public class SpesialisasiModel implements Serializable {
     @ManyToMany(mappedBy = "listSpesialisasi")
     List<DokterModel> listDokter;
 
+    private int jumlahDokter;
+
+    public List<DokterModel> getListDokter() {
+        return listDokter;
+    }
+
+    public void setListDokter(List<DokterModel> listDokter) {
+        this.listDokter = listDokter;
+    }
+
+    public int getJumlahDokter() {
+        return jumlahDokter;
+    }
+
+    public void setJumlahDokter(int jumlahDokter) {
+        this.jumlahDokter = jumlahDokter;
+    }
+
     public Long getIdSpesialisasi() {
         return idSpesialisasi;
     }

@@ -15,7 +15,5 @@ public interface JadwalJagaService {
 
     List<JadwalJagaModel> getJadwalJagaByPoli(PoliModel poliModel);
 
-    DokterModel findMostDokter(Long idPoli);
-
-    List<DokterModel> findAllDokterByIdPoli(Long idPoli);
+    public List<DokterModel> getDokterTerbanyakBertugasdiPoli(PoliModel poli);
 }

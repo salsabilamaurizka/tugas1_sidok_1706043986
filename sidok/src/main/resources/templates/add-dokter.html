@@ -8,7 +8,13 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-
-<h2 th:text="'Dokter ' + ${nama} + ' dengan NIP ' + ${nip} + ' berhasil ditambahkan.'"></h2>
+<div class="container-fluid">
+    <br>
+    <div class="container-fluid">
+        <h3 th:text="'Dokter ' + ${nama} + ' dengan NIP ' + ${nip} + ' berhasil ditambahkan.'"></h3>
+        <br>
+        <a th:href="@{/}"> Kembali ke Home</a>
+    </div>
+</div>
 </body>
 </html>
