@@ -71,7 +71,7 @@ public class PoliController {
     public String changePoliFormSubmit(@PathVariable Long idPoli, @ModelAttribute PoliModel poli, Model model) {
         PoliModel newPoliData = poliService.changePoli(poli);
         model.addAttribute("poli", newPoliData);
-        model.addAttribute("namaPoli", poli.getNama());
+        model.addAttribute("namaPoli", newPoliData.getNama());
         return "update-poli";
     }
 

@@ -10,7 +10,7 @@ public interface PoliDb extends JpaRepository<PoliModel, Long> {
 
     List<PoliModel> findAll();
 
-    Optional<PoliModel> findById(Long idPoli);
+    Optional<PoliModel> findByIdPoli(Long idPoli);
 
     void delete(PoliModel poli);
 }
