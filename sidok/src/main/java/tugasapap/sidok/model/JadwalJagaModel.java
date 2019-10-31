@@ -7,41 +7,41 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 
 @Entity
-@Table(name="jadwal_jaga")
-public class JadwalJagaModel {
+@Table(name="jadwalJaga")
+public class JadwalJagaModel implements Serializable {
     //id,hari,id_poli,id_dokter
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long idJadwalJaga;
 
     @NotNull
     @Size(max = 20)
-    @Column(name = "hari_jadwal_jaga", nullable = false)
+    @Column(name = "hari", nullable = false)
     private String hari;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "poliId", referencedColumnName = "idPoli", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private SpesialisasiDokterModel spesialisasiDokterModel;
+    private PoliModel poli;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "dokterId", referencedColumnName = "idDokter", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private JadwalJagaModel jadwalJagaModel;
+    private DokterModel dokter;
 
-    public BigInteger getId() {
-        return id;
+    public Long getIdJadwalJaga() {
+        return idJadwalJaga;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setIdJadwalJaga(Long idJadwalJaga) {
+        this.idJadwalJaga = idJadwalJaga;
     }
 
     public String getHari() {
@@ -52,19 +52,19 @@ public class JadwalJagaModel {
         this.hari = hari;
     }
 
-    public SpesialisasiDokterModel getSpesialisasiDokterModel() {
-        return spesialisasiDokterModel;
+    public PoliModel getPoli() {
+        return poli;
     }
 
-    public void setSpesialisasiDokterModel(SpesialisasiDokterModel spesialisasiDokterModel) {
-        this.spesialisasiDokterModel = spesialisasiDokterModel;
+    public void setPoli(PoliModel poli) {
+        this.poli = poli;
     }
 
-    public JadwalJagaModel getJadwalJagaModel() {
-        return jadwalJagaModel;
+    public DokterModel getDokter() {
+        return dokter;
     }
 
-    public void setJadwalJagaModel(JadwalJagaModel jadwalJagaModel) {
-        this.jadwalJagaModel = jadwalJagaModel;
+    public void setDokter(DokterModel dokter) {
+        this.dokter = dokter;
     }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Detail Dokter</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <br>
+            <div class="card mt-6" style="width: 25rem;">
+                <h2 class="card-title bg-light p-3">Detail Poli</h2>
+                <div class="card-body">
+                    <p th:text="'ID: ' + ${poli.idPoli}"></p>
+                    <p th:text="'Nama: ' + ${poli.nama}"></p>
+                    <p th:text="'Lokasi: ' + ${poli.lokasi}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -8,38 +8,56 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 
 @Entity
 @Table(name = "spesialisasi")
 
-public class SpesialisasiModel {
+public class SpesialisasiModel implements Serializable {
     //id,nama,gelar
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long idSpesialisasi;
 
     @NotNull
     @Size(max = 255)
-    @Column(name="nama_spesialisasi", nullable = false)
+    @Column(name="nama", nullable = false)
     private String nama;
 
     @NotNull
     @Size(max = 255)
-    @Column(name="gelar_spesialisasi", nullable = false)
+    @Column(name="gelar", nullable = false)
     private String gelar;
 
-    @OneToMany(mappedBy = "dokter", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<SpesialisasiDokterModel> listSpesialisasiDokter;
+    @ManyToMany(mappedBy = "listSpesialisasi")
+    List<DokterModel> listDokter;
 
-    public BigInteger getId() {
-        return id;
+    private int jumlahDokter;
+
+    public List<DokterModel> getListDokter() {
+        return listDokter;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setListDokter(List<DokterModel> listDokter) {
+        this.listDokter = listDokter;
+    }
+
+    public int getJumlahDokter() {
+        return jumlahDokter;
+    }
+
+    public void setJumlahDokter(int jumlahDokter) {
+        this.jumlahDokter = jumlahDokter;
+    }
+
+    public Long getIdSpesialisasi() {
+        return idSpesialisasi;
+    }
+
+    public void setIdSpesialisasi(Long idSpesialisasi) {
+        this.idSpesialisasi = idSpesialisasi;
     }
 
     public String getNama() {
@@ -56,13 +74,5 @@ public class SpesialisasiModel {
 
     public void setGelar(String gelar) {
         this.gelar = gelar;
-    }
-
-    public List<SpesialisasiDokterModel> getListSpesialisasiDokter() {
-        return listSpesialisasiDokter;
-    }
-
-    public void setListSpesialisasiDokter(List<SpesialisasiDokterModel> listSpesialisasiDokter) {
-        this.listSpesialisasiDokter = listSpesialisasiDokter;
     }
 }

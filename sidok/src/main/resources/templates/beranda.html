@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Sistem Informasi Dokter</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <div class="container-fluid">
+        <br>
+        <h2 class="text-center"> Sistem Informasi Dokter</h2>
+        <div class="text-right m-3">
+            <a class="btn btn-sm bg-dark text-white" th:href="@{/dokter/tambah}" style="color: white"> Tambah Dokter </a>
+        </div>
+        <div style="border:1px solid lightgrey">
+            <p class="p-3 bg-dark text-white"> Daftar Dokter</p>
+            <div class="px-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">NIP</th>
+                            <th scope="col">NIK</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Spesialisasi</th>
+                            <th scope="col" style="width:13em;"></th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="dokter, iterationStatus : ${listDokter}">
+                        <tr>
+                            <th scope="row" th:text="${iterationStatus.count}"></th>
+                            <td><a th:text="${dokter.nama}" th:href="@{/dokter?nikDokter=} + ${dokter.nik}" ></a></td>
+                            <td th:text="${dokter.nip}"></td>
+                            <td th:text="${dokter.nik}"></td>
+                            <td th:text="${dokter.jenisKelamin} == 1 ? 'Laki-Laki' : (${dokter.jenisKelamin} == 2 ? 'Perempuan')"></td>
+                            <td>
+                                <ul th:if="${dokter.listSpesialisasi.size() == 0}"> - </ul>
+                                <ul th:unless="${dokter.listSpesialisasi.size() == 0}" th:each="spesialisasi, iterationStatus2 : ${dokter.listSpesialisasi}">
+                                    <li th:text="${spesialisasi.nama}"></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <form class="d-inline" th:action="@{/jadwal/tambah/} + ${dokter.nip}" th:method="GET">
+                                    <button class="btn btn-sm btn-primary text-white"value="submit">Tambah</button>
+                                </form>
+                                <form class="d-inline" th:action="@{/dokter/update/} + ${dokter.idDokter}" th:method="GET">
+                                    <button class="btn btn-sm btn-dark text-white"value="submit">Ubah</button>
+                                </form>
+                                <form class="d-inline" th:action="@{/dokter/delete/} + ${dokter.idDokter}" th:method="POST">
+                                    <button class="btn btn-sm btn-danger text-white"value="submit">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+</body>
+
+</html>

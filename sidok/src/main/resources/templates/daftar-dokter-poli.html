@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dokter yang bertugas di Poli</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-7">
+            <br>
+            <h3 class="text-center" th:text="'Sistem Informasi Dokter'"></h3>
+            <br>
+            <div style="border:1px solid lightgrey">
+                    <p th:text="'Daftar Dokter yang Bertugas di ' + ${poli.nama}" class="p-3 bg-dark text-white" align="left"></p>
+                    <div class="px-3">
+                        <table class="table" style="margin: 15px">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama Dokter</th>
+                                    <th scope="col">Spesialisasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="jadwalJagaPoli, iterationStatus : *{listJadwalJagaPoli}">
+                                    <td th:text="${iterationStatus.count}"></td>
+                                    <td th:text="${jadwalJagaPoli.dokter.nama}"></td>
+                                    <td>
+                                        <ul th:each="spesialisasi, iterationStatus2 : ${jadwalJagaPoli.dokter.listSpesialisasi}">
+                                            <li th:text="${spesialisasi.nama}"></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+</body>
+</html>

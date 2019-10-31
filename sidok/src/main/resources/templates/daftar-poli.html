@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Sistem Informasi Dokter</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-7">
+            <br>
+            <h2 class="text-center align-content-center"> Sistem Informasi Dokter</h2>
+            <div class="text-right m-3">
+                <a class="btn btn-sm bg-dark text-white" th:href="@{/poli/tambah}" style="color: white"> Tambah Poli </a>
+            </div>
+            <div style="border:1px solid lightgrey">
+                <p class="p-3 bg-dark text-white"> Daftar Poli</p>
+                <div class="px-3">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Lokasi</th>
+                            <th scope="col" style="width:13em;"></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="poli, iterationStatus : ${listPoli}">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td>
+                                <a th:href="@{/poli/dokter/} + ${poli.idPoli}" th:text="${poli.nama}"></a>
+                            </td>
+                            <td th:text="${poli.lokasi}"></td>
+                            <td>
+                                <form class="d-inline" th:action="@{/poli/update/} + ${poli.idPoli}">
+                                    <button class="btn btn-sm bg-dark text-white">
+                                        Ubah
+                                    </button>
+                                </form>
+                                <form class="d-inline" th:action="@{/poli/delete/}+${poli.idPoli}">
+                                    <button class="btn btn-sm btn-danger text-white">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+</body>
+
+</html>

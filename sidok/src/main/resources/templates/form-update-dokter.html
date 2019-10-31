@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Ubah Dokter</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<!--<div class="container-fluid">-->
+<div class="row justify-content-center">
+    <div class="mt-5" style="width: 50rem;">
+    <div class="">
+        <div class="container-fluid" style="margin-left:200px">
+            <div class="w-50 py-4 card">
+            <h2 class="text-center"> Ubah Dokter </h2>
+            <br>
+            <div class="card-body">
+                <form th:action="@{/dokter/update}" th:object="${dokter}" method="POST">
+                    <input type="hidden" th:field="*{idDokter}" th:value="${dokter.idDokter}" />
+
+                    <div class="row pt-1">
+                        <label class="col-sm-4"> Nama </label>
+                        <input class="col-sm-7 form-control input-sm" type="text" th:value="${dokter.nama}" name="nama" required/>
+                    </div>
+                    <div class="row pt-1">
+                        <label class="col-sm-4"> NIK </label>
+                        <input class="col-sm-7 form-control input-sm" type="text" th:value="${dokter.nik}" name="nik" readonly="true"/>
+                    </div>
+                    <div class="row pt-1">
+                        <label class="col-sm-4"> Tanggal Lahir</label>
+                        <input class="col-sm-7 form-control input-sm" type="date" th:value="${{dokter.tanggalLahir}}" name="tanggalLahir" required/>
+                    </div>
+                    <div class="row pt-1">
+                        <label class="col-sm-4"> Tempat Lahir</label>
+                        <input class="col-sm-7 form-control input-sm" type="text" th:value="${dokter.tempatLahir}" name="tempatLahir" required/>
+                    </div>
+                    <div class="row pt-1">
+                        <label class="col-sm-4"> Jenis Kelamin</label>
+                        <select name="jenisKelamin" class="col-sm-7 form-control input-sm" required>
+                            <option th:disabled="true" th:selected="true" th:if="${dokter.jenisKelamin}==1">Laki-Laki</option>
+                            <option th:disabled="true" th:selected="true" th:if="${dokter.jenisKelamin}==2">Perempuan</option>
+                            <option th:value="1">Laki-Laki</option>
+                            <option th:value="2">Perempuan</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <br>
+                        <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--</div>-->
+
+</body>
+
+</html>
