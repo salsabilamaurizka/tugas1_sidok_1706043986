@@ -49,7 +49,7 @@ public class PoliServiceImpl implements PoliService{
     @Override
     public PoliModel changePoli(PoliModel poliModel) {
 
-        PoliModel targetPoli = poliDb.findByIdPoli(poliModel.getIdPoli()).get();
+        PoliModel targetPoli = poliDb.findById(poliModel.getIdPoli()).get();
 
         try {
             targetPoli.setNama(poliModel.getNama());

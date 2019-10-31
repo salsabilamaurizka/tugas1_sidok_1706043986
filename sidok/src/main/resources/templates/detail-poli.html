@@ -13,6 +13,14 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
             <br>
+            <div th:if="${success != null && success}" style="width: 25rem;">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p class="mb-0" th:text=" ${poli.nama} + ' berhasil ditambahkan.'"></p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
             <div class="card mt-6" style="width: 25rem;">
                 <h2 class="card-title bg-light p-3">Detail Poli</h2>
                 <div class="card-body">
