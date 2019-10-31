@@ -42,27 +42,29 @@ public class JadwalJagaServiceImpl implements JadwalJagaService{
     @Override
     public List<DokterModel> getDokterTerbanyakBertugasdiPoli(PoliModel poli) {
         try {
-
             List<JadwalJagaModel> jadwalJagaList = jadwalJagaDb.findJadwalJagaByPoli(poli);
             List<DokterModel> listDokterByPoli = new ArrayList<>();
             for (JadwalJagaModel jadwalJaga : jadwalJagaList) {
                 listDokterByPoli.add(jadwalJaga.getDokter());
             }
-
+            //Membuat sebuah hashmap yang key-nya adalah doktermodel dan value-nya frekuensi dokter tersebut
             Map<DokterModel, Integer> map = new HashMap<>();
+
+            //Looping untuk assign frekuensi tiap dokter
             for (DokterModel dokter : listDokterByPoli) {
                 Integer val = map.get(dokter);
+                //Setiap bertemu satu dokter maka jumlah akan ditambah 1
                 map.put(dokter, val == null ? 1 : val + 1);
             }
-
+            //Mencari nilai maksimum dari frekuensi yang ada di map
             Map.Entry<DokterModel, Integer> max = null;
             for (Map.Entry<DokterModel, Integer> e : map.entrySet()) {
                 if (max == null || e.getValue() > max.getValue()) max = e;
             }
-
+            //Nilai maksimum dari frekuensi yang ada di map
             int maxValue = max.getValue();
 
-            //list untuk memasukkan dokter yang tersibuk
+            //List untuk memasukkan dokter yang tersibuk
             List<DokterModel> listDokterTersibuk = new ArrayList<>();
 
             //mencari dokter dengan value yang sama seperti max lalu dimasukkan ke dalam list

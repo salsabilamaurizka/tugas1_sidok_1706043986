@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import tugasapap.sidok.model.DokterModel;
 import tugasapap.sidok.model.JadwalJagaModel;
 import tugasapap.sidok.model.PoliModel;
@@ -101,13 +103,23 @@ public class DokterController {
     }
 
     //API yang digunakan untuk submit form change dokter
-    @RequestMapping(value = "/dokter/update/{idDokter}", method = RequestMethod.POST)
-    public String changeDokterFormSubmit(@PathVariable Long idDokter, @ModelAttribute DokterModel dokter, Model model) {
-        String nip = dokterService.generateNIPDokter(dokter);
-        dokter.setNip(nip);
+    @RequestMapping(value = "/dokter/update", method = RequestMethod.POST)
+    public RedirectView changeDokterFormSubmit(@ModelAttribute DokterModel dokter, RedirectAttributes attributes) {
         DokterModel newDokterData = dokterService.changeDokter(dokter);
-        model.addAttribute("dokter", newDokterData);
+        String nip = dokterService.generateNIPDokter(newDokterData);
+        newDokterData.setNip(nip);
 
+        attributes.addFlashAttribute("success", true);
+        attributes.addFlashAttribute("nipDokter", newDokterData.getNip());
+//        attributes.addFlashAttribute("dokter", newDokterData);
+        return new RedirectView("/dokter/view/" + newDokterData.getNik());
+    }
+
+    //URL mapping yang digunakan untuk melihat detail dari suatu poli
+    @RequestMapping(value = "/dokter/view/{nik}", method = RequestMethod.GET)
+    private String viewPoli(@PathVariable(value = "nik") String nik, Model model) {
+        DokterModel dokter = dokterService.getDokterByNik(nik).get();
+        model.addAttribute("dokter", dokter);
         return "detail-dokter";
     }
 

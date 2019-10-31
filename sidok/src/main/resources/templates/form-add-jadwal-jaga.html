@@ -60,6 +60,15 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-md-7">
+                <div th:if="${success != null && success}">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <p class="mb-0" th:text="'Berhasil menambahkan jadwal jaga untuk Dokter ' + ${dokter.nama} + ' di ' + ${jadwalJagaModel.poli.nama} + ' pada hari ' + ${jadwalJagaModel.hari}"></p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                </div>
+
                 <div style="border:1px solid lightgrey">
                     <p class="p-3 bg-dark text-white"> Daftar Poli</p>
                     <div class="px-3">

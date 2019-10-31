@@ -13,65 +13,68 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <!--<div class="container-fluid">-->
 <div class="row justify-content-center">
-    <div class="card mt-5" style="width: 70rem;">
-        <div class="card-body">
-            <h2 class="text-center"> Tambah Dokter </h2>
-            <br>
+    <div class="mt-5" style="width: 70rem;">
+        <div class="">
             <div class="container-fluid" style="margin-left:280px">
-                <div class="w-50">
-                    <form th:action="@{/dokter/tambah}" th:object="${dokter}" method="POST">
-                        <div class="row pt-1">
-                            <label class="col-sm-4"> Nama </label>
-                            <div class="col-sm-7">
-                                <input class="form-control input-sm mb-2" type="text" name="nama" th:field="*{nama}" required/>
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <label class="col-sm-4"> NIK </label>
-                            <div class="col-sm-7">
-                                <input class="form-control input-sm mb-2" type="text" name="nik" th:field="*{nik}" required/>
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <label class="col-sm-4"> Tanggal Lahir</label>
-                            <div class="col-sm-7">
-                                <input class="form-control input-sm mb-2" type="date" name="tanggalLahir" th:field="*{tanggalLahir}" required/>
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <label class="col-sm-4"> Tempat Lahir</label>
-                            <div class="col-sm-7">
-                                <input class="form-control input-sm mb-2" type="text" name="tempatLahir" th:field="*{tempatLahir}" required/>
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <label class="col-sm-4"> Jenis Kelamin</label>
-                            <div class="col-sm-7">
-                                <select name="jenisKelamin" class="form-control input-sm mb-2" th:field="*{jenisKelamin}" required>
-                                    <option th:value="1">Laki-Laki</option>
-                                    <option th:value="2">Perempuan</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <label class="col-sm-4"> Spesialisasi</label>
-                            <div class="col-sm-7">
-                                <tr th:each="spesialisasi, iterationStatus : *{listSpesialisasi}">
-                                    <select class="form-control mb-2" id="sel1" th:field="*{listSpesialisasi[__${iterationStatus.index}__]}">
-                                        <option value="">-- Silahkan Pilih Spesialisasi --</option>
-                                        <option th:each="spesialisasi : ${listSpesialisasi}" th:text="${spesialisasi.nama}" th:value="${spesialisasi.idSpesialisasi}"></option>
-                                    </select>
-                                </tr>
-                                <div>
-                                    <input type="submit" value="tambah spesialisasi" name="addRow" class="btn btn-sm btn-outline-dark">
+                <div class="w-50 py-2 card">
+                    <div class="card-body">
+                        <h2 class="text-center"> Tambah Dokter </h2>
+                        <br>
+                        <form th:action="@{/dokter/tambah}" th:object="${dokter}" method="POST">
+                            <div class="row pt-1">
+                                <label class="col-sm-4"> Nama </label>
+                                <div class="col-sm-7">
+                                    <input class="form-control input-sm mb-2" type="text" name="nama" th:field="*{nama}" required/>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
+                            <div class="row pt-1">
+                                <label class="col-sm-4"> NIK </label>
+                                <div class="col-sm-7">
+                                    <input class="form-control input-sm mb-2" type="text" name="nik" th:field="*{nik}" required/>
+                                </div>
+                            </div>
+                            <div class="row pt-1">
+                                <label class="col-sm-4"> Tanggal Lahir</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control input-sm mb-2" type="date" name="tanggalLahir" th:field="*{tanggalLahir}" required/>
+                                </div>
+                            </div>
+                            <div class="row pt-1">
+                                <label class="col-sm-4"> Tempat Lahir</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control input-sm mb-2" type="text" name="tempatLahir" th:field="*{tempatLahir}" required/>
+                                </div>
+                            </div>
+                            <div class="row pt-1">
+                                <label class="col-sm-4"> Jenis Kelamin</label>
+                                <div class="col-sm-7">
+                                    <select name="jenisKelamin" class="form-control input-sm mb-2" th:field="*{jenisKelamin}" required>
+                                        <option th:value="1">Laki-Laki</option>
+                                        <option th:value="2">Perempuan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-1">
+                                <label class="col-sm-4"> Spesialisasi</label>
+                                <div class="col-sm-7">
+                                    <tr th:each="spesialisasi, iterationStatus : *{listSpesialisasi}">
+                                        <select class="form-control mb-2" id="sel1" th:field="*{listSpesialisasi[__${iterationStatus.index}__]}">
+                                            <option value="">-- Silahkan Pilih Spesialisasi --</option>
+                                            <option th:each="spesialisasi : ${listSpesialisasi}" th:text="${spesialisasi.nama}" th:value="${spesialisasi.idSpesialisasi}"></option>
+                                        </select>
+                                    </tr>
+                                    <div>
+                                        <input type="submit" value="tambah spesialisasi" name="addRow" class="btn btn-sm btn-outline-dark">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
                         </form>
                     </div>
+                    </div>
                 </div>
+            <br>
         </div>
     </div>
 </div>

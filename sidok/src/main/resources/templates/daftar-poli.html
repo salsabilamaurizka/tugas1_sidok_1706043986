@@ -14,7 +14,9 @@
         <div class="col-md-7">
             <br>
             <h2 class="text-center align-content-center"> Sistem Informasi Dokter</h2>
-            <br>
+            <div class="text-right m-3">
+                <a class="btn btn-sm bg-dark text-white" th:href="@{/poli/tambah}" style="color: white"> Tambah Poli </a>
+            </div>
             <div style="border:1px solid lightgrey">
                 <p class="p-3 bg-dark text-white"> Daftar Poli</p>
                 <div class="px-3">
@@ -24,8 +26,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Lokasi</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col" style="width:13em;"></th>
                         </tr>
                         </thead>
 
@@ -37,14 +38,12 @@
                             </td>
                             <td th:text="${poli.lokasi}"></td>
                             <td>
-                                <form th:action="@{/poli/update/} + ${poli.idPoli}">
+                                <form class="d-inline" th:action="@{/poli/update/} + ${poli.idPoli}">
                                     <button class="btn btn-sm bg-dark text-white">
                                         Ubah
                                     </button>
                                 </form>
-                            </td>
-                            <td>
-                                <form th:action="@{/poli/delete/}+${poli.idPoli}">
+                                <form class="d-inline" th:action="@{/poli/delete/}+${poli.idPoli}">
                                     <button class="btn btn-sm btn-danger text-white">
                                         Hapus
                                     </button>
@@ -53,9 +52,6 @@
                         </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="text-right m-3">
-                    <a class="btn btn-sm bg-dark text-white" th:href="@{/poli/tambah}" style="color: white"> Tambah Poli </a>
                 </div>
             </div>
             <br>

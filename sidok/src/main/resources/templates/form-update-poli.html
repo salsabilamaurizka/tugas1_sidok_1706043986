@@ -12,26 +12,30 @@
 
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="row justify-content-center">
-    <div class="card mt-5" style="width: 70rem;">
-        <div class="card-body">
-        <h2 class="text-center"> Ubah Poli </h2>
-        <br>
+    <div class="mt-5" style="width: 70rem;">
+        <div class="">
         <div class="container-fluid" style="margin-left:280px">
-            <div class="w-50">
-                <form th:action="@{/poli/update/{idPoli}(idPoli=${poli.idPoli})}" th:object="${poli}" method="POST">
-                    <div class="row pt-1">
-                        <label class="col-sm-4"> Nama </label>
-                        <input class="col-sm-7 form-control input-sm" type="text" th:value="${poli.nama}" name="nama"/>
-                    </div>
-                    <div class="row pt-1">
-                        <label class="col-sm-4"> Lokasi </label>
-                        <input class="col-sm-7 form-control input-sm" type="text" th:value="${poli.lokasi}" name="lokasi"/>
-                    </div>
-                    <br>
-                    <div>
-                        <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
-                    </div>
-                </form>
+            <div class="w-50 card py-3">
+                <h2 class="text-center"> Ubah Poli </h2>
+                <br>
+                <div class="card-body">
+                    <form th:action="@{/poli/update/} + ${poli.idPoli}" th:object="${poli}" method="POST">
+                        <input type="hidden" th:field="*{idPoli}" th:value="${poli.idPoli}" />
+                        <div class="row pt-1">
+                            <label class="col-sm-4"> Nama </label>
+                            <input class="col-sm-7 form-control input-sm" type="text" th:value="${poli.nama}" name="nama"/>
+                        </div>
+                        <div class="row pt-1">
+                            <label class="col-sm-4"> Lokasi </label>
+                            <input class="col-sm-7 form-control input-sm" type="text" th:value="${poli.lokasi}" name="lokasi"/>
+                        </div>
+                        <br>
+                        <div>
+                            <button class="btn btn-sm btn-primary" type="submit"> Submit </button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
         </div>
         </div>

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import tugasapap.sidok.model.DokterModel;
 import tugasapap.sidok.model.JadwalJagaModel;
 import tugasapap.sidok.model.PoliModel;
@@ -49,13 +51,26 @@ public class JadwalJagaController {
 
     //URL mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add jadwal jaga
     @RequestMapping(value = "jadwal/tambah/{nip}", method = RequestMethod.POST)
-    public String tambahJadwalJagaSubmit(@PathVariable String nip, @ModelAttribute JadwalJagaModel jadwalJaga, Model model) {
+    public RedirectView tambahJadwalJagaSubmit(@PathVariable(value = "nip") String nip, @ModelAttribute JadwalJagaModel jadwalJaga, RedirectAttributes attributes) {
         DokterModel dokter = dokterService.getDokterByNip(nip).get();
         jadwalJaga.setDokter(dokter);
         jadwalJagaService.addJadwalJaga(jadwalJaga);
-        model.addAttribute("jadwalJaga",jadwalJaga);
-        model.addAttribute("dokter",dokter);
-        return "add-jadwal-jaga";
+
+        attributes.addFlashAttribute("success", true);
+        attributes.addFlashAttribute("nipDokter", dokter.getNip());
+        attributes.addFlashAttribute("jadwalJagaModel", jadwalJaga);
+//        jadwalJagaService.addJadwalJaga(jadwalJaga);
+//        model.addAttribute("jadwalJaga",jadwalJaga);
+//        model.addAttribute("dokter",dokter);
+        return new RedirectView("/jadwal/tambah/" + dokter.getNip());
+    }
+
+    //URL mapping yang digunakan untuk melihat detail dari suatu poli
+    @RequestMapping(value = "/jadwal/tambah/{nip}", method = RequestMethod.GET, params= {"nip"})
+    private String viewPoli(@PathVariable(value = "nip") String nip, Model model) {
+        DokterModel dokter = dokterService.getDokterByNip(nip).get();
+        model.addAttribute("dokter", dokter);
+        return "form-add-jadwal-jaga";
     }
 
     // URL mapping view poli
@@ -70,5 +85,18 @@ public class JadwalJagaController {
         // Return view template
         return "daftar-dokter-poli";
     }
+
+
+//    //URL mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add jadwal jaga
+//    @RequestMapping(value = "jadwal/tambah/{nip}", method = RequestMethod.POST)
+//    public String tambahJadwalJagaSubmit(@PathVariable String nip, @ModelAttribute JadwalJagaModel jadwalJaga, Model model) {
+//        DokterModel dokter = dokterService.getDokterByNip(nip).get();
+//        jadwalJaga.setDokter(dokter);
+//        jadwalJagaService.addJadwalJaga(jadwalJaga);
+//        model.addAttribute("jadwalJaga",jadwalJaga);
+//        model.addAttribute("dokter",dokter);
+//        return "add-jadwal-jaga";
+//    }
+
 
 }

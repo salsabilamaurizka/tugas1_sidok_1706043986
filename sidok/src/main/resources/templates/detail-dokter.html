@@ -13,11 +13,19 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
             <br>
+            <div th:if="${success != null && success}" style="width: 25rem;">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p class="mb-0" th:text="'Dokter ' + ${dokter.nama} + ' berhasil diubah'"></p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+            </div>
             <div class="card mt-6" style="width: 25rem;">
                 <h2 class="card-title bg-light p-3">Detail Dokter</h2>
                 <div class="card-body">
                     <p th:text="'Nama: ' + ${dokter.nama}"></p>
-                    <p th:text="'NIP: ' + ${dokter.nip}"></p>
+                    <p th:text="'NIP: ' + ${nipDokter}"></p>
                     <p th:text="'NIK: ' + ${dokter.nik}"></p>
                     <p th:text="'Tempat Lahir: ' + ${dokter.tempatLahir}"></p>
                     <p th:text="'Tanggal Lahir: ' + ${#dates.format(dokter.tanggalLahir, 'yyyy-MM-dd')}"></p>
@@ -43,6 +51,7 @@
             </div>
         </div>
     </div>
+    <br>
 </div>
 
 </body>
